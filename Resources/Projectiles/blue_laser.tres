@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ProjectileStats" load_steps=2 format=3 uid="uid://bgn77ynvxr158"]
+
+[ext_resource type="Script" uid="uid://cccwkrysfq83a" path="res://Util/Ship/Weapons/Projectiles/projectileStats.gd" id="1_3kdpb"]
+
+[resource]
+script = ExtResource("1_3kdpb")
+projectileSpeed = 200.0
+lifetime = 7.5
+shieldDamage = 10
+hullDamage = 10
+metadata/_custom_type_script = "uid://cccwkrysfq83a"

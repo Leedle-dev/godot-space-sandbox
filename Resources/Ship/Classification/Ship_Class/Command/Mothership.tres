@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ShipClass" load_steps=4 format=3 uid="uid://bjlqkuth5gec6"]
+
+[ext_resource type="Script" uid="uid://c2oa725s1rw3i" path="res://Util/Ship/Classification/ship_class.gd" id="1_u0hes"]
+[ext_resource type="Resource" uid="uid://jd3i752n63dr" path="res://Resources/Ship/Classification/Ship_Type/Command.tres" id="2_4437v"]
+[ext_resource type="Resource" uid="uid://degjfsgm28vf6" path="res://Resources/Ship/Classification/Size_Class/XL_Size.tres" id="2_u0hes"]
+
+[resource]
+script = ExtResource("1_u0hes")
+shipClassName = "Mothership"
+shipType = ExtResource("2_4437v")
+sizeClass = ExtResource("2_u0hes")
+metadata/_custom_type_script = "uid://c2oa725s1rw3i"

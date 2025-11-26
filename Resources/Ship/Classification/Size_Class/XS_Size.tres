@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SizeClass" load_steps=2 format=3 uid="uid://bj43ois0y3exv"]
+
+[ext_resource type="Script" uid="uid://cy6mlt7ygeov5" path="res://Util/Ship/Classification/size_class.gd" id="1_vea4p"]
+
+[resource]
+script = ExtResource("1_vea4p")
+size = "Extra Small"
+sizeAbbreviation = "XS"
+metadata/_custom_type_script = "uid://cy6mlt7ygeov5"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ShipType" load_steps=2 format=3 uid="uid://d2jsadd8apvi7"]
+
+[ext_resource type="Script" uid="uid://kp3tm70b33iv" path="res://Util/Ship/Classification/ship_type.gd" id="1_a78ih"]
+
+[resource]
+script = ExtResource("1_a78ih")
+description = "Battleships are general purpose dogfighters. They excel at eliminating ships within the same size class. They have a good balance of firepower, shielding, and maneuverability. "
+shipType = "Battleship"
+metadata/_custom_type_script = "uid://kp3tm70b33iv"

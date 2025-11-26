@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponStats" load_steps=3 format=3 uid="uid://dltj0si44wy4g"]
+
+[ext_resource type="Resource" uid="uid://degfl8e3ekrwp" path="res://Resources/Projectiles/green_laser.tres" id="1_hciqf"]
+[ext_resource type="Script" uid="uid://berc52ap1insg" path="res://Util/Ship/Weapons/weapon_stats.gd" id="1_up4a0"]
+
+[resource]
+script = ExtResource("1_up4a0")
+inaccuracy = 6.0
+gimbal = 60.0
+range = 3000.0
+projectileStats = ExtResource("1_hciqf")
+weaponType = 3
+metadata/_custom_type_script = "uid://berc52ap1insg"

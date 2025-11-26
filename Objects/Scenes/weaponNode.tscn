@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfe7b2tymk3nm"]
+
+[ext_resource type="Script" uid="uid://dx8bi4javniu7" path="res://Util/Ship/Weapons/weaponNode.gd" id="1_7jep7"]
+
+[node name="WeaponNode" type="Node2D"]
+script = ExtResource("1_7jep7")
+metadata/_custom_type_script = "uid://dx8bi4javniu7"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ShipClass" load_steps=4 format=3 uid="uid://dufwwirvs3qfx"]
+
+[ext_resource type="Script" uid="uid://c2oa725s1rw3i" path="res://Util/Ship/Classification/ship_class.gd" id="1_rkxct"]
+[ext_resource type="Resource" uid="uid://t64g3ndssdny" path="res://Resources/Ship/Classification/Size_Class/S_Size.tres" id="2_ksy4g"]
+[ext_resource type="Resource" uid="uid://d2jsadd8apvi7" path="res://Resources/Ship/Classification/Ship_Type/Battleship.tres" id="2_svdbh"]
+
+[resource]
+script = ExtResource("1_rkxct")
+shipClassName = "Assault"
+shipType = ExtResource("2_svdbh")
+sizeClass = ExtResource("2_ksy4g")
+metadata/_custom_type_script = "uid://c2oa725s1rw3i"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponStats" load_steps=3 format=3 uid="uid://bphfmv4jhgo4i"]
+
+[ext_resource type="Resource" uid="uid://qvnckpr13gqa" path="res://Resources/Projectiles/red_laser.tres" id="1_ab4mm"]
+[ext_resource type="Script" uid="uid://berc52ap1insg" path="res://Util/Ship/Weapons/weapon_stats.gd" id="1_wto53"]
+
+[resource]
+script = ExtResource("1_wto53")
+inaccuracy = 3.0
+gimbal = 5.0
+range = 5000.0
+projectileStats = ExtResource("1_ab4mm")
+secondaryTargetClass = "M"
+metadata/_custom_type_script = "uid://berc52ap1insg"

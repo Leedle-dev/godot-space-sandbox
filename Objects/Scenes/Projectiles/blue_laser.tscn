@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://ebswued4vsht"]
+
+[ext_resource type="PackedScene" uid="uid://h6ug5lifi0ny" path="res://Objects/Scenes/projectile.tscn" id="1_dp07p"]
+[ext_resource type="Resource" uid="uid://bgn77ynvxr158" path="res://Resources/Projectiles/blue_laser.tres" id="2_lecyx"]
+[ext_resource type="Texture2D" uid="uid://dqems7nkufmux" path="res://Art/bullet-blue.png" id="3_lyx7u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qxk6b"]
+radius = 2.0
+
+[node name="Projectile" instance=ExtResource("1_dp07p")]
+stats = ExtResource("2_lecyx")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3_lyx7u")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_qxk6b")

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="FactionInfo" load_steps=2 format=3 uid="uid://dkvtg5qnl2qp5"]
+
+[ext_resource type="Script" uid="uid://pyijs6gereos" path="res://Util/NationHierarchy/faction_info.gd" id="1_0winm"]
+
+[resource]
+script = ExtResource("1_0winm")
+factionName = "Manistan"
+metadata/_custom_type_script = "uid://pyijs6gereos"

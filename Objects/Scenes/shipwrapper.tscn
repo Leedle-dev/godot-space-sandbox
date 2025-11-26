@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://4sc85bnga5f1"]
+
+[ext_resource type="Script" uid="uid://cqupie281lva0" path="res://Objects/Scripts/shipwrapper.gd" id="1_845jv"]
+
+[node name="ShipWrapper" type="Node2D"]
+script = ExtResource("1_845jv")

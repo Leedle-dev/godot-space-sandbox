@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="ShipStats" load_steps=10 format=3 uid="uid://du5e7c8vpxy8t"]
+
+[ext_resource type="Script" uid="uid://bgwmd3sy2nx00" path="res://Util/Ship/ship_stats.gd" id="1_mu65s"]
+[ext_resource type="Script" uid="uid://dub72n0n3rblq" path="res://Util/Ship/Weapons/hardpoints.gd" id="1_rxwsb"]
+[ext_resource type="Resource" uid="uid://cbreds3oose86" path="res://Resources/Ship/Classification/Ship_Class/Heavy Battleship/Bastion.tres" id="2_rxwsb"]
+[ext_resource type="Texture2D" uid="uid://cy11js1wm7opk" path="res://Art/shipArt/Bastion 1_right.png" id="4_e73xl"]
+[ext_resource type="Script" uid="uid://berc52ap1insg" path="res://Util/Ship/Weapons/weapon_stats.gd" id="5_e73xl"]
+[ext_resource type="Resource" uid="uid://bphfmv4jhgo4i" path="res://Resources/Ship/WeaponStats/Bastion_Main_Battery.tres" id="6_8pa38"]
+[ext_resource type="Resource" uid="uid://c3hfcqc6x667" path="res://Resources/Ship/WeaponStats/Bastion_Front_Turret.tres" id="7_28m02"]
+[ext_resource type="Resource" uid="uid://dltj0si44wy4g" path="res://Resources/Ship/WeaponStats/Bastion_Rear_Turret.tres" id="8_8pa38"]
+
+[sub_resource type="Resource" id="Resource_e73xl"]
+script = ExtResource("1_rxwsb")
+weaponAttachmentPoint = Array[Vector2]([Vector2(65, 7), Vector2(84, 28), Vector2(84, 66), Vector2(65, 88), Vector2(54, 36), Vector2(54, 59)])
+weaponTypes = Array[int]([0, 1, 1, 0, 3, 3])
+rotationDegrees = Array[float]([0.0, 0.0, 0.0, 0.0, 225.0, 135.0])
+metadata/_custom_type_script = "uid://dub72n0n3rblq"
+
+[resource]
+script = ExtResource("1_mu65s")
+texture = ExtResource("4_e73xl")
+shipClass = ExtResource("2_rxwsb")
+name = "Albatross"
+hardpoints = SubResource("Resource_e73xl")
+weaponSystems = Dictionary[int, ExtResource("5_e73xl")]({
+0: ExtResource("6_8pa38"),
+1: ExtResource("7_28m02"),
+3: ExtResource("8_8pa38")
+})
+version = 1
+maxThrust = 300.0
+turnRate = 1.0
+brakeForce = 100.0
+metadata/_custom_type_script = "uid://bgwmd3sy2nx00"

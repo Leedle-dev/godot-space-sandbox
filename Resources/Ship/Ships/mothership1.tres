@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ShipStats" load_steps=7 format=3 uid="uid://s1f08x8kks2j"]
+
+[ext_resource type="Script" uid="uid://bgwmd3sy2nx00" path="res://Util/Ship/ship_stats.gd" id="1_hhwxj"]
+[ext_resource type="Script" uid="uid://dub72n0n3rblq" path="res://Util/Ship/Weapons/hardpoints.gd" id="1_q24kp"]
+[ext_resource type="Resource" uid="uid://bjlqkuth5gec6" path="res://Resources/Ship/Classification/Ship_Class/Command/Mothership.tres" id="2_nufhp"]
+[ext_resource type="Texture2D" uid="uid://nuw0cp47e2yf" path="res://Art/shipArt/Mothership 1_right.png" id="4_sixfc"]
+[ext_resource type="Script" uid="uid://berc52ap1insg" path="res://Util/Ship/Weapons/weapon_stats.gd" id="5_imwn2"]
+
+[sub_resource type="Resource" id="Resource_sixfc"]
+script = ExtResource("1_q24kp")
+metadata/_custom_type_script = "uid://dub72n0n3rblq"
+
+[resource]
+script = ExtResource("1_hhwxj")
+texture = ExtResource("4_sixfc")
+shipClass = ExtResource("2_nufhp")
+name = "Golgadon"
+hardpoints = SubResource("Resource_sixfc")
+version = 1
+maxThrust = 125.0
+turnRate = 20.0
+brakeForce = 100.0
+sideBrake = 5.0
+metadata/_custom_type_script = "uid://bgwmd3sy2nx00"

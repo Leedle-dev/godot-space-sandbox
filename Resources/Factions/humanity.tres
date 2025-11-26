@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="FactionInfo" load_steps=2 format=3 uid="uid://cwxbte0a55rwl"]
+
+[ext_resource type="Script" uid="uid://pyijs6gereos" path="res://Util/NationHierarchy/faction_info.gd" id="1_8x445"]
+
+[resource]
+script = ExtResource("1_8x445")
+factionName = "Humanity"
+metadata/_custom_type_script = "uid://pyijs6gereos"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ShipType" load_steps=2 format=3 uid="uid://jd3i752n63dr"]
+
+[ext_resource type="Script" uid="uid://kp3tm70b33iv" path="res://Util/Ship/Classification/ship_type.gd" id="1_xt4aj"]
+
+[resource]
+script = ExtResource("1_xt4aj")
+description = "Command ships are the heart of any squadron. They safely transport large amounts of smaller ships, and offer reinforcements in the midst of battle. They have a good balance of defensive firepower, shielding, and maneuverability. "
+shipType = "Command"
+metadata/_custom_type_script = "uid://kp3tm70b33iv"

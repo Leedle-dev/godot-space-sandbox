@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ShipType" load_steps=2 format=3 uid="uid://cxseptmrgamcu"]
+
+[ext_resource type="Script" uid="uid://kp3tm70b33iv" path="res://Util/Ship/Classification/ship_type.gd" id="1_fwwu7"]
+
+[resource]
+script = ExtResource("1_fwwu7")
+description = "Transport ships are used to transport resources to stations. They have very low combat capabilities."
+shipType = "Transport"
+metadata/_custom_type_script = "uid://kp3tm70b33iv"

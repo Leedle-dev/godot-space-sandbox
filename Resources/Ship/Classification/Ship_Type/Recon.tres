@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ShipType" load_steps=2 format=3 uid="uid://dy4whx0y2sgrg"]
+
+[ext_resource type="Script" uid="uid://kp3tm70b33iv" path="res://Util/Ship/Classification/ship_type.gd" id="1_5f3qv"]
+
+[resource]
+script = ExtResource("1_5f3qv")
+description = "Recon ships excel at exploring sectors. They can find and mark POIs in sectors, expand your known sectors, and detect enemy presences. They often have little combat capabilities, but can easily evade battle."
+shipType = "Recon"
+metadata/_custom_type_script = "uid://kp3tm70b33iv"

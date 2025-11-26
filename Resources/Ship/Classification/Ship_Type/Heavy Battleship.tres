@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ShipType" load_steps=2 format=3 uid="uid://pxan851r06vg"]
+
+[ext_resource type="Script" uid="uid://kp3tm70b33iv" path="res://Util/Ship/Classification/ship_type.gd" id="1_080qf"]
+
+[resource]
+script = ExtResource("1_080qf")
+description = "Heavy Battleships are specialized dogfighters. They excel at eliminating ships above their size class. They tend to tradeoff maneuverability for increased shielding and firepower. "
+shipType = "Heavy Battleship"
+metadata/_custom_type_script = "uid://kp3tm70b33iv"

@@ -1,0 +1,70 @@
+[gd_scene load_steps=13 format=3 uid="uid://dku456a7y7wjy"]
+
+[ext_resource type="Script" uid="uid://chtol2ylp4lln" path="res://Objects/Scripts/ship.gd" id="1_d7t81"]
+[ext_resource type="Script" uid="uid://ctp4x0gao12gr" path="res://Util/Components/health.gd" id="2_ng6vo"]
+[ext_resource type="Script" uid="uid://drcbr3e5jhctj" path="res://Util/States/state_machine.gd" id="3_7i3pj"]
+[ext_resource type="Script" uid="uid://dnonyay083qp2" path="res://Objects/Scripts/vision.gd" id="3_d2ank"]
+[ext_resource type="Script" uid="uid://b2y7hxkebboiq" path="res://Util/States/Movement/wanderstate.gd" id="4_lemqb"]
+[ext_resource type="Texture2D" uid="uid://cp0wjttj1u3rs" path="res://Art/arrow.png" id="5_3qs4b"]
+[ext_resource type="Texture2D" uid="uid://d1g3v31aas6sp" path="res://Art/icon.svg" id="5_lk0f8"]
+[ext_resource type="Script" uid="uid://bbt22ro3m7j7v" path="res://Util/States/Movement/targetShip.gd" id="6_qusv6"]
+[ext_resource type="Script" uid="uid://bfjk6dy15a75p" path="res://Util/States/Movement/fleestate.gd" id="8_bhhjl"]
+[ext_resource type="Script" uid="uid://bljnxfud1jmbu" path="res://Util/States/Movement/idlestate.gd" id="9_d2ank"]
+[ext_resource type="Script" uid="uid://b4jsdjfhh7hm1" path="res://Util/States/Movement/seekstate.gd" id="10_eiwh5"]
+[ext_resource type="Script" uid="uid://18mqx3hcei2" path="res://Util/States/Movement/orbitstate.gd" id="11_ovok2"]
+
+[node name="Ship" type="RigidBody2D"]
+collision_mask = 0
+gravity_scale = 0.0
+inertia = 1.0
+script = ExtResource("1_d7t81")
+
+[node name="ShipHitbox" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Arrow" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(4, 4)
+texture = ExtResource("5_3qs4b")
+
+[node name="Vision" type="Node2D" parent="."]
+script = ExtResource("3_d2ank")
+visionRadius = null
+forwardConeAngle = null
+rearConeAngle = null
+omniDirectional = null
+
+[node name="VisionArea" type="Area2D" parent="Vision"]
+
+[node name="VisionAreaRadius" type="CollisionShape2D" parent="Vision/VisionArea"]
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_ng6vo")
+metadata/_custom_type_script = "uid://ctp4x0gao12gr"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initialState")]
+script = ExtResource("3_7i3pj")
+initialState = NodePath("idlestate")
+
+[node name="wanderstate" type="Node" parent="StateMachine"]
+script = ExtResource("4_lemqb")
+metadata/_custom_type_script = "uid://b2y7hxkebboiq"
+
+[node name="Sprite2D" type="Sprite2D" parent="StateMachine/wanderstate"]
+texture = ExtResource("5_lk0f8")
+
+[node name="targetship" type="Node" parent="StateMachine"]
+script = ExtResource("6_qusv6")
+
+[node name="fleestate" type="Node" parent="StateMachine"]
+script = ExtResource("8_bhhjl")
+
+[node name="idlestate" type="Node" parent="StateMachine"]
+script = ExtResource("9_d2ank")
+
+[node name="seekstate" type="Node" parent="StateMachine"]
+script = ExtResource("10_eiwh5")
+
+[node name="orbitstate" type="Node" parent="StateMachine"]
+script = ExtResource("11_ovok2")

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SizeClass" load_steps=2 format=3 uid="uid://444v1nml8v1d"]
+
+[ext_resource type="Script" uid="uid://cy6mlt7ygeov5" path="res://Util/Ship/Classification/size_class.gd" id="1_hrmkp"]
+
+[resource]
+script = ExtResource("1_hrmkp")
+size = 5
+sizeAbbreviation = 5
+metadata/_custom_type_script = "uid://cy6mlt7ygeov5"

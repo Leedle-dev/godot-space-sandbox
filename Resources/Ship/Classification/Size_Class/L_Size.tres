@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SizeClass" load_steps=2 format=3 uid="uid://cjqelsii8dp4e"]
+
+[ext_resource type="Script" uid="uid://cy6mlt7ygeov5" path="res://Util/Ship/Classification/size_class.gd" id="1_cmi31"]
+
+[resource]
+script = ExtResource("1_cmi31")
+size = 3
+sizeAbbreviation = 3
+metadata/_custom_type_script = "uid://cy6mlt7ygeov5"

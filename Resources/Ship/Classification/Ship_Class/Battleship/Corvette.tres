@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ShipClass" load_steps=4 format=3 uid="uid://tq412p26neb"]
+
+[ext_resource type="Script" uid="uid://c2oa725s1rw3i" path="res://Util/Ship/Classification/ship_class.gd" id="1_tmbga"]
+[ext_resource type="Resource" uid="uid://nyunfac0nbtp" path="res://Resources/Ship/Classification/Size_Class/M_Size.tres" id="2_dvopj"]
+[ext_resource type="Resource" uid="uid://d2jsadd8apvi7" path="res://Resources/Ship/Classification/Ship_Type/Battleship.tres" id="2_gq5y0"]
+
+[resource]
+script = ExtResource("1_tmbga")
+shipClassName = "Corvette"
+shipType = ExtResource("2_gq5y0")
+sizeClass = ExtResource("2_dvopj")
+metadata/_custom_type_script = "uid://c2oa725s1rw3i"
