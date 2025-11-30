@@ -9,4 +9,4 @@ var weaponType : Hardpoints.hardpointTypes
 ## This is the rotation in degrees that the hardpoint will face.
 var rotationDegrees : float
 ## The Weapon to be attached to the Hardpoint
-#var weapon : WeaponStats
+var weapon : WeaponNode

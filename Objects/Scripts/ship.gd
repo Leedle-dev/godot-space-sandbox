@@ -22,10 +22,11 @@ var updateBucketIndex := -1
 @onready var state_machine := $StateMachine
 @onready var sprite := $Sprite2D
 @onready var godotSprite := $StateMachine/WanderState/Sprite2D
+@onready var vision := $Vision
 
 var primaryTarget: RigidBody2D = null
 func getDetectedEnemies() -> Dictionary:
-	return $Vision.enemiesInRadius
+	return vision.enemiesInRadius
 
 var weaponHardpoints: Array[Hardpoint] = []
 
@@ -34,6 +35,9 @@ var maxThrust := 250.0
 var turnRate := 120.0
 var brakeForce := 250.0
 var sideBrake := 3.0
+
+# TODO Logic to set this combat flag
+var bIsInCombat : bool = true
 
 signal newTargetAcquired
 
@@ -74,9 +78,13 @@ func initMovementStats():
 ## It calls update once every N frames where N is the bucket count within StaggeredUpdateManager.
 func staggeredUpdate(delta : float) :
 	if primaryTarget == null:
-		primaryTarget = $Vision.acquireTarget()
+		primaryTarget = vision.acquireTarget()
 		if primaryTarget != null:
 			newTargetAcquired.emit()
+	if bIsInCombat:
+		for hardpoint in weaponHardpoints:
+			# TODO Hardcoded for M class ships for testing
+			hardpoint.weapon.acquireTarget(vision.getBodiesInRadiusBySize(getSizeAbbr()).keys(), primaryTarget)
 	pass
 
 func _physics_process(delta):
@@ -97,20 +105,19 @@ func spawnHardpoints() :
 		add_child(newHardpoint)
 		weaponHardpoints.append(newHardpoint)
 		counter += 1
-	for hardpoint in weaponHardpoints:
-		pass
 		
 
 func attachWeapons():
 	for hardpoint in weaponHardpoints:
 		attachWeaponToHardpoint(hardpoint)
-	pass
 
 func attachWeaponToHardpoint(hardpoint : Hardpoint):
-	var newWeapon = weaponNodePackedScene.instantiate()
+	var newWeapon : WeaponNode = weaponNodePackedScene.instantiate()
 	newWeapon.weaponStats = getMatchingWeaponSystem(hardpoint.weaponType)
+	newWeapon.shipAttachedTo = self
+	newWeapon.hardpointAttachedTo = hardpoint
+	hardpoint.weapon = newWeapon
 	hardpoint.add_child(newWeapon)
-	pass
 
 func getMatchingWeaponSystem(hardpointType : Hardpoints.hardpointTypes) -> WeaponStats:
 	#print_debug("hardpointType: " + str(hardpointType))

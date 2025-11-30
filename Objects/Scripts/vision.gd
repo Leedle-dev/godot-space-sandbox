@@ -11,7 +11,24 @@ extends Node2D
 
 var myShip : Ship
 
-var bodiesInRadius := {}
+# Will probably use this
+# Stores a reference to every ship in this ship's vision range.
+# Sorted by size class
+var bodiesInRadius := {
+	SizeClass.sizeAbbreviations.XS : {}, 
+	SizeClass.sizeAbbreviations.S : {}, 
+	SizeClass.sizeAbbreviations.M : {}, 
+	SizeClass.sizeAbbreviations.L : {},
+	SizeClass.sizeAbbreviations.XL : {},
+	SizeClass.sizeAbbreviations.XXL : {}
+}
+
+func getBodiesInRadiusBySize(size : SizeClass.sizeAbbreviations) -> Dictionary:
+	return bodiesInRadius[size]
+
+# On second thoughts, probably won't be able to use this
+# The logic for vision and such needs to be stored in 1 Dict. 
+# Determination of enemy or not from the get go could pigeonhole into literally everything being hostile that's an enemy.
 var enemiesInRadiusBySize := {
 SizeClass.sizeAbbreviations.XS : {}, 
 SizeClass.sizeAbbreviations.S : {}, 
@@ -20,6 +37,9 @@ SizeClass.sizeAbbreviations.L : {},
 SizeClass.sizeAbbreviations.XL : {},
 SizeClass.sizeAbbreviations.XXL : {}
 }
+
+
+
 var enemiesInWeaponRadius := {}
 
 ## Prepares the node. attempting to get the shape from editor doesn't seem to allow radius setting in the CircleShape2D.
@@ -33,7 +53,7 @@ func _ready():
 	$VisionArea.body_exited.connect(onBodyExited)
 
 func onBodyEntered(body):
-	bodiesInRadius.set(body, body)
+	bodiesInRadius[body.getSizeAbbr()].set(body, body)
 	# This should check the relation map, determine if the ship is hostile.
 	# If it's hostile, add the ship to the enemiesInRadiusBySize Dict depending on its size class.
 	if body is Ship:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://okoqscvrt1p6"]
+[gd_scene load_steps=15 format=3 uid="uid://okoqscvrt1p6"]
 
 [ext_resource type="Texture2D" uid="uid://b5wdn4arggva" path="res://Art/shipArt/Assault 2.png" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://vjjb5yhl7ox0" path="res://Player/Scripts/pcam2dcontroller.gd" id="1_ynf5e"]
@@ -9,8 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://bpav6u3btycia" path="res://Art/shipArt/Bastion 1.png" id="4_kry3j"]
 [ext_resource type="Texture2D" uid="uid://bnc2v74mvw2cq" path="res://Art/shipArt/Destroyer 1.png" id="5_21xkr"]
 [ext_resource type="Texture2D" uid="uid://bk2yejiyq3xnr" path="res://Art/shipArt/Mothership 1.png" id="7_6bp64"]
-[ext_resource type="PackedScene" uid="uid://dife3o0y3uijn" path="res://Objects/Scenes/Ships/Bastion1.tscn" id="10_hptm8"]
-[ext_resource type="PackedScene" uid="uid://k701pmwd7080" path="res://Objects/Scenes/Ships/mothership1.tscn" id="11_d1ilt"]
 
 [sub_resource type="Resource" id="Resource_6iyac"]
 script = ExtResource("4_d1ilt")
@@ -71,12 +69,11 @@ tween_resource = SubResource("Resource_6iyac")
 draw_limits = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
-[node name="PCam2DGlued" type="Node2D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
+[node name="PCam2DGlued" type="Node2D" parent="Cameras"]
 top_level = true
 script = ExtResource("3_hptm8")
 priority = 2
 follow_mode = 1
-follow_target = NodePath("../../Ship")
 snap_to_pixel = true
 tween_resource = SubResource("Resource_fdnlq")
 draw_limits = true
@@ -88,17 +85,16 @@ position = Vector2(482, 1653.5)
 script = ExtResource("3_hptm8")
 priority = 1
 follow_mode = 3
-follow_targets = [NodePath("../../1x1/Assault5"), NodePath("../../1x1/Destroyer1"), NodePath("../../1x1/Mothership3"), NodePath("../../Ship")]
+follow_targets = [NodePath("../../1x1/Assault5"), NodePath("../../1x1/Destroyer1"), NodePath("../../1x1/Mothership3"), null]
 snap_to_pixel = true
 tween_resource = SubResource("Resource_jkdf5")
 draw_limits = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
-[node name="PCam2DSimpleFollow" type="Node2D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
+[node name="PCam2DSimpleFollow" type="Node2D" parent="Cameras"]
 top_level = true
 script = ExtResource("3_hptm8")
 follow_mode = 2
-follow_target = NodePath("../../Ship")
 snap_to_pixel = true
 tween_resource = SubResource("Resource_d1ilt")
 draw_limits = true
@@ -227,6 +223,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="1x1" type="Node2D" parent="."]
+visible = false
 
 [node name="Assault5" type="Sprite2D" parent="1x1"]
 position = Vector2(961, 418)
@@ -263,7 +260,3 @@ texture_repeat = 1
 position = Vector2(790, 3307)
 scale = Vector2(16, 16)
 texture = ExtResource("7_6bp64")
-
-[node name="Ship" parent="." instance=ExtResource("10_hptm8")]
-
-[node name="Ship2" parent="." instance=ExtResource("11_d1ilt")]

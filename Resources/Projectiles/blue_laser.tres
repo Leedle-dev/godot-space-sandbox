@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_3kdpb")
-projectileSpeed = 200.0
+projectileSpeed = 1500.0
 lifetime = 7.5
 shieldDamage = 10
 hullDamage = 10

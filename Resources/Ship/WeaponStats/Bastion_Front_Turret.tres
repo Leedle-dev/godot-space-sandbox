@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="WeaponStats" load_steps=3 format=3 uid="uid://c3hfcqc6x667"]
+[gd_resource type="Resource" script_class="WeaponStats" load_steps=4 format=3 uid="uid://c3hfcqc6x667"]
 
 [ext_resource type="Script" uid="uid://berc52ap1insg" path="res://Util/Ship/Weapons/weapon_stats.gd" id="1_gpnb3"]
+[ext_resource type="PackedScene" uid="uid://ebswued4vsht" path="res://Objects/Scenes/Projectiles/blue_laser.tscn" id="1_iee6s"]
 [ext_resource type="Resource" uid="uid://bgn77ynvxr158" path="res://Resources/Projectiles/blue_laser.tres" id="1_ifkbw"]
 
 [resource]
@@ -8,5 +9,6 @@ script = ExtResource("1_gpnb3")
 gimbal = 10.0
 range = 3500.0
 projectileStats = ExtResource("1_ifkbw")
+projectileScene = ExtResource("1_iee6s")
 weaponType = 1
 metadata/_custom_type_script = "uid://berc52ap1insg"

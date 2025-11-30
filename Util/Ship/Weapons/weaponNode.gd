@@ -1,7 +1,7 @@
 class_name WeaponNode
 extends Node2D
 
-static var projectileScene : PackedScene = preload("res://Objects/Scenes/projectile.tscn")
+var projectileScene : PackedScene = preload("res://Objects/Scenes/projectile.tscn")
 
 ## Simple little Matrix here to help with deciding weapon priority.
 ## Each weapon has a main priority of ship size to target, along with a secondary target.
@@ -46,12 +46,14 @@ func initStats():
 #	global_position = hardpointAttachedTo.global_position
 	cooldown = weaponStats.firingCooldown
 	burstCount = weaponStats.projectileShotsPerBurst
+	projectileScene = weaponStats.projectileScene
 
 func initProjectile():
 	pass
 
 func _process(delta: float) -> void:
 	if bCanFire && target != null:
+		#print_debug("calling fire weapon")
 		fireWeapon()
 		if burstCount <= 0:
 			resetCooldown()
@@ -63,6 +65,7 @@ func _process(delta: float) -> void:
 	pass
 
 func fireWeapon():
+	print_debug("firing: " + str(self))
 	fireProjectile()
 	burstCount -= 1
 	cooldown = weaponStats.burstDelay
@@ -70,18 +73,25 @@ func fireWeapon():
 func resetCooldown():
 	cooldown = weaponStats.firingCooldown
 	burstCount = weaponStats.projectileShotsPerBurst
+	bCanFire = false
 
 func fireProjectile():
-	var projectile = projectileScene.instantiate()
+	var projectile : Projectile = projectileScene.instantiate()
 	projectile.global_position = global_position
-	projectile.global_rotation = global_rotation
-	projectile.get_script().stats = weaponStats.projectileStats
+	projectile.rotation = global_rotation
+	projectile.stats = weaponStats.projectileStats
+	projectile.scale = shipAttachedTo.determineScale()
 	get_tree().current_scene.add_child(projectile)
 
 func acquireTarget(enemyList, primaryTarget : Ship):
+	target = calcBestTarget(enemyList, primaryTarget)
+
+
+func calcBestTarget(enemyList, primaryTarget : Ship):
 	# Prioritize primary target if It's within out firing arc and our weapon class matches the target.
-	if primaryTarget.getSizeAbbrKey().to_lower() == weaponStats.priorityTargetClass.to_lower() and isInFiringArc(primaryTarget):
-		return primaryTarget
+	if primaryTarget != null:
+		if primaryTarget.getSizeAbbrKey().to_lower() == weaponStats.priorityTargetClass.to_lower() and isInFiringArc(primaryTarget):
+			return primaryTarget
 
 	var bestTarget = null
 	var bestScore = -10
@@ -109,8 +119,8 @@ func determineTargetPriorityScore(tar : Ship) -> int:
 	return targetScore
 
 
-func isInFiringArc(target):
-	var distanceToTarget = (target.global_position - global_position).normalized()
+func isInFiringArc(tar):
+	var distanceToTarget = (tar.global_position - global_position).normalized()
 	var forward = global_transform.x.normalized()
 	var angle = rad_to_deg(acos(forward.dot(distanceToTarget)))
 

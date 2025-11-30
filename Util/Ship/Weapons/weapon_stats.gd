@@ -18,8 +18,10 @@ extends Resource
 @export_range(0, 360, 1.0) var gimbal : float = 1.0
 ## Maximum weapon range for target acquisition and firing. 
 @export_range(500.0, 30000.0, 100.0) var range : float = 500.0
-## The Projectile that will be fired.
+## The stats that the projectile will have (Used to influence damage, speed, lifetime, etc.)
 @export var projectileStats: ProjectileStats
+## The projectile scene that will be fired (Used to adjust sprite and hitbox)
+@export var projectileScene: PackedScene
 
 ## The weapon system's primary target size
 @export var priorityTargetClass : String = "S"
