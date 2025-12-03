@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://dku456a7y7wjy"]
+[gd_scene load_steps=16 format=3 uid="uid://dku456a7y7wjy"]
 
 [ext_resource type="Script" uid="uid://chtol2ylp4lln" path="res://Objects/Scripts/ship.gd" id="1_d7t81"]
 [ext_resource type="Script" uid="uid://ctp4x0gao12gr" path="res://Util/Components/health.gd" id="2_ng6vo"]
+[ext_resource type="Script" uid="uid://co42sbhfjtw6f" path="res://Util/Ship/Hitbox/hitbox_component.gd" id="2_ovok2"]
 [ext_resource type="Script" uid="uid://drcbr3e5jhctj" path="res://Util/States/state_machine.gd" id="3_7i3pj"]
 [ext_resource type="Script" uid="uid://dnonyay083qp2" path="res://Objects/Scripts/vision.gd" id="3_d2ank"]
 [ext_resource type="Script" uid="uid://b2y7hxkebboiq" path="res://Util/States/Movement/wanderstate.gd" id="4_lemqb"]
@@ -12,6 +13,11 @@
 [ext_resource type="Script" uid="uid://bljnxfud1jmbu" path="res://Util/States/Movement/idlestate.gd" id="9_d2ank"]
 [ext_resource type="Script" uid="uid://b4jsdjfhh7hm1" path="res://Util/States/Movement/seekstate.gd" id="10_eiwh5"]
 [ext_resource type="Script" uid="uid://18mqx3hcei2" path="res://Util/States/Movement/orbitstate.gd" id="11_ovok2"]
+[ext_resource type="Script" uid="uid://bn03qn8k7nyvh" path="res://Util/Ship/AI/flight_controller.gd" id="13_eiwh5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eiwh5"]
+radius = 1.0
+height = 2.0
 
 [node name="Ship" type="RigidBody2D"]
 collision_mask = 0
@@ -20,8 +26,12 @@ inertia = 1.0
 script = ExtResource("1_d7t81")
 
 [node name="ShipHitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_eiwh5")
+script = ExtResource("2_ovok2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Sprite2D_LOD1" type="Sprite2D" parent="."]
 
 [node name="Arrow" type="Sprite2D" parent="."]
 visible = false
@@ -64,3 +74,8 @@ script = ExtResource("10_eiwh5")
 
 [node name="orbitstate" type="Node" parent="StateMachine"]
 script = ExtResource("11_ovok2")
+
+[node name="FlightController" type="Node" parent="."]
+script = ExtResource("13_eiwh5")
+
+[node name="TaskManager" type="Node" parent="."]

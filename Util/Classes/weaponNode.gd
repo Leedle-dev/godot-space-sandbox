@@ -65,7 +65,7 @@ func _process(delta: float) -> void:
 	pass
 
 func fireWeapon():
-	print_debug("firing: " + str(self))
+	#print_debug("firing: " + str(self))
 	fireProjectile()
 	burstCount -= 1
 	cooldown = weaponStats.burstDelay

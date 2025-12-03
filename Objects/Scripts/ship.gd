@@ -4,6 +4,8 @@ extends RigidBody2D
 var myWrapper : ShipWrapper
 static var weaponNodePackedScene : PackedScene = load("res://Objects/Scenes/weaponNode.tscn")
 
+#var camera : PCam2DController
+
 #signal damaged(attack: Attack)
 @export var stats: ShipStats
 func getSizeAbbr() -> int :
@@ -19,10 +21,16 @@ var pilot : Individual
 # Init to -1, on register gets set.
 var updateBucketIndex := -1
 
+const LOD0_THRESHOLD = 1050    # pixels on screen
+const LOD1_THRESHOLD = 1300
+const LOD2_THRESHOLD = 50
+
 @onready var state_machine := $StateMachine
-@onready var sprite := $Sprite2D
+@onready var sprite :Sprite2D = $Sprite2D
+@onready var spriteLOD1 : Sprite2D = $Sprite2D_LOD1
 @onready var godotSprite := $StateMachine/WanderState/Sprite2D
 @onready var vision := $Vision
+@onready var flightController := $FlightController
 
 var primaryTarget: RigidBody2D = null
 func getDetectedEnemies() -> Dictionary:
@@ -43,14 +51,19 @@ signal newTargetAcquired
 
 func _ready() -> void:
 	initSprite()
-	adjustHitboxScale()
+	#adjustHitboxScale()
 	initMovementStats()
 	spawnHardpoints()
 	attachWeapons()
+	if pilot == null:
+		pilot = Spawner.spawnPilot(self)
 	#for hardpoint in weaponHardpoints:
 	#	hardpoint.rotate(1.570796)
 
+	#camera  = %Camera2D
+	#camera.zoomChanged.connect(adjustSpriteFilter)
 	StaggeredUpdateManager.register(self)
+
 
 ## Initializes the sprite for the ship.
 # Sets the correct pixel filter and scale of the sprite.
@@ -59,12 +72,24 @@ func _ready() -> void:
 # Practically no performance hit.
 func initSprite():
 	sprite.texture = stats.texture
-	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	spriteLOD1.texture = stats.textureLOD1
+	spriteLOD1.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	sprite.scale = determineScale()
+	spriteLOD1.scale = determineScale()*2
 	#sprite.rotate(1.570796)
 
-func adjustHitboxScale():
-	$ShipHitbox.scale = determineScale()
+func adjustSpriteFilter():
+	"""
+	if camera.currentZoomIndex <= 6:
+		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	elif camera.currentZoomIndex >= 7:
+		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	"""
+	pass
+
+
+
 
 ## Initializes the movements stats for the ship
 # Currently just setting the local variables from the ships' stats resource. Technically duplicating, but easy for testing.
@@ -87,9 +112,43 @@ func staggeredUpdate(delta : float) :
 			hardpoint.weapon.acquireTarget(vision.getBodiesInRadiusBySize(getSizeAbbr()).keys(), primaryTarget)
 	pass
 
+var procCount: int  = 1
+func _process(delta: float) -> void:
+	#sprite.position = sprite.position.round()
+	#updateLOD()
+	pass
+
+func updateLOD():
+	var viewport := get_viewport()
+	var camera := viewport.get_camera_2d()
+	if camera == null: 
+		print_debug("Camera null") 
+		return
+	# Project ship size to screen-space
+	var zoom_factor := camera.zoom.x  # assuming uniform zoom
+	var screen_size := sprite_visual_size() / zoom_factor
+	if (procCount % 100 == 0 && getSizeAbbr() == SizeClass.sizeAbbreviations.XL):
+		print_debug(screen_size)
+		procCount = 1
+	else:
+		procCount += 1
+	if screen_size < LOD0_THRESHOLD:
+		set_lod(0)
+	elif screen_size < LOD1_THRESHOLD:
+		set_lod(1)
+
+func sprite_visual_size() -> float:
+	# approximate diagonal of LOD0 sprite
+	var tex := stats.texture
+	return sqrt(tex.get_width() * tex.get_width() + tex.get_height() * tex.get_height())
+
+func set_lod(level : int):
+	sprite.visible = level == 0
+	spriteLOD1.visible = level == 1
+
 func _physics_process(delta):
 	state_machine.manualProcess(delta)
-	pass
+	
 
 
 func spawnHardpoints() :
@@ -128,22 +187,29 @@ func doesWeaponMatchHardpoint() -> bool:
 	
 	return false
 
+
+static var shipVectorScale : PackedVector2Array = [Vector2(0.25,0.25), Vector2(0.5,0.5), Vector2(1,1), Vector2(1,1) ]
+static var shipFloatScale : PackedFloat64Array = [0.25, 0.5, 1.0, 1.0]
+
 func determineScale() -> Vector2:
-	var sizeAbbr = getSizeAbbr()
-	match sizeAbbr:
-		0:
-			return Vector2(1,1)
-		1: ## S class
-			return Vector2(2,2)
-		2: ## M Class
-			return Vector2(4,4)
-		3: ## L Class
-			return Vector2(8,8)
-		4: ## XL Class
-			return Vector2(16,16)
-		5: ## XXL Class
-			return Vector2(16,16)
-	return Vector2(1,1)
+	match getSizeAbbr():
+		0: return shipVectorScale[0] ## XS class
+		1: return shipVectorScale[0] ## S class		
+		2: return shipVectorScale[1] ## M Class
+		3: return shipVectorScale[2] ## L Class
+		4: return shipVectorScale[3] ## XL Class
+		5: return shipVectorScale[3] ## XXL Class
+	return shipVectorScale[0]
+
+func determineScaleFloat() -> float :
+	match getSizeAbbr():
+		0: return shipFloatScale[0] ## XS class
+		1: return shipFloatScale[0] ## S class		
+		2: return shipFloatScale[1] ## M Class
+		3: return shipFloatScale[2] ## L Class
+		4: return shipFloatScale[3] ## XL Class
+		5: return shipFloatScale[3] ## XXL Class
+	return shipFloatScale[0]
 
 func determineThrustStrength() -> float:
 	# --- DIRECTIONAL THRUST BLENDING ---
@@ -215,7 +281,7 @@ func seekTarget(delta : float) :
 func seekTargetPos(delta: float, target : Vector2) :
 	turnToward(target, delta)
 	if isFacing(target, 25):
-		thrustForward(determineThrustStrengthPos(target, 0.25))
+		thrustForward(determineThrustStrengthPos(target, 0.5))
 		reduceSideDrift()
 	#else:
 	#	thrustBrake()

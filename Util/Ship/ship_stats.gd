@@ -2,6 +2,7 @@ class_name ShipStats
 extends Resource
 
 @export var texture : Texture2D
+@export var textureLOD1 : Texture2D
 @export var shipClass : ShipClass
 @export var name : String
 @export var hardpoints : Hardpoints

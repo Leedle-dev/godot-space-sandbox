@@ -28,7 +28,7 @@ weaponSystems = Dictionary[int, ExtResource("5_e73xl")]({
 3: ExtResource("8_8pa38")
 })
 version = 1
-maxThrust = 300.0
+maxThrust = 0.1
 turnRate = 1.0
-brakeForce = 100.0
+brakeForce = 60.0
 metadata/_custom_type_script = "uid://bgwmd3sy2nx00"

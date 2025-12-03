@@ -27,6 +27,7 @@ PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_came
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/stretch/mode="viewport"
 
 [editor_plugins]
 
@@ -102,6 +103,5 @@ common/physics_interpolation=true
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.12941177, 0.11764706, 0.1254902, 1)
-2d/snap/snap_2d_transforms_to_pixel=true
-2d/snap/snap_2d_vertices_to_pixel=true
+textures/default_filters/anisotropic_filtering_level=0
+environment/defaults/default_clear_color=Color(0.04972607, 0.026908591, 0.20390174, 1)
