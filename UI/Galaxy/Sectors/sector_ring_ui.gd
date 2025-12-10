@@ -1,13 +1,16 @@
 extends Control
 class_name SectorRingUI
 
-@export var gateRects : Array[TextureRect]
-@onready var nameLabel : Label = $SectorName
+@onready var sectorRing : SectorRing = $SectorRing
+
+func scaleElements(scale : Vector2 = Vector2(1,1)) -> void:
+	sectorRing.scale = scale
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
 
 
-func setGateVisibility(sector: SectorInfo):
-	for i in range(8):
-		gateRects[i].visible = sector.discovered[i]
-
-func setSectorName(sector: SectorInfo):
-	nameLabel.text = sector.name
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass

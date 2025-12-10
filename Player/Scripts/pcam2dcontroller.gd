@@ -11,15 +11,15 @@
 extends Camera2D
 class_name PCam2DController
 #                                                     0                               1                         2                          3                         4                      5                   6           7
-# Previous vectors. Zoom too far with tac map and smaller scale ships. Vector2(0.0078125,0.0078125), Vector2(0.015625,0.015625), Vector2(0.03125,0.03125), Vector2(0.0625, 0.0625),
+# Previous vectors. Zoom too far with tac map and smaller scale ships. Vector2(0.0078125,0.0078125), Vector2(0.015625,0.015625), Vector2(0.03125,0.03125), 
 # Previous Drag. 64.0, 32.0, 16.0, 8.0,
-#                                                   0                   1                    2                 3                 4                  5                6           
-static var zoomLevels = PackedVector2Array([ Vector2(0.125,0.125), Vector2(0.25,0.25), Vector2(0.5,0.5), Vector2(1.0,1.0), Vector2(2.0,2.0), Vector2(4.0,4.0), Vector2(8.0,8.0)])
-static var dragLevels = PackedFloat64Array([4.0, 2.0, 1.0, 0.5, 0.25, 0.125, 0.0625])
+#                                                   0                   1                    2                 3                 4                  5                6                       7
+static var zoomLevels = PackedVector2Array([Vector2(0.0625, 0.0625), Vector2(0.125,0.125), Vector2(0.25,0.25), Vector2(0.5,0.5), Vector2(1.0,1.0), Vector2(2.0,2.0), Vector2(4.0,4.0), Vector2(8.0,8.0)])
+static var dragLevels = PackedFloat64Array([8.0, 4.0, 2.0, 1.0, 0.5, 0.25, 0.125, 0.0625])
 
 var focusUI : bool = false
 
-var currentZoomIndex = 3
+var currentZoomIndex = 4
 var minIndex = 0
 var maxIndex = zoomLevels.size() - 1
 var targetZoom : Vector2 = zoomLevels[currentZoomIndex]

@@ -29,10 +29,9 @@ func gameplayInput(event : InputEvent) -> void:
 
 	if event.is_action_pressed("mouse_wheel_down"):
 		# If player zooms out while camera zoom is max, swap to Tac view
-		if cameraController.currentZoomIndex == 0:
+		if cameraController.currentZoomIndex == 1:
 			viewManager.switchMode(viewManager.MODE.TACTICAL)
-		else:
-			cameraController.zoomOut()
+		cameraController.zoomOut()
 
 	if (event.is_action_pressed("swap_pcam_nofollow")):
 		cameraController.swapPCamNoFollow()
@@ -50,7 +49,9 @@ func gameplayInput(event : InputEvent) -> void:
 		cameraController.registerLMBMove(event)
 
 func tacticalInput(event : InputEvent) -> void:
-	pass
+	if event.is_action_pressed("mouse_wheel_up"):
+		viewManager.switchMode(viewManager.MODE.GAMEPLAY)
+		cameraController.zoomIn()
 
 func systemInput(event : InputEvent) -> void:
 	pass

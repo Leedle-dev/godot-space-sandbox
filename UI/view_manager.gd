@@ -18,7 +18,7 @@ func switchMode(mode : MODE):
 	currentMode = mode
 	match currentMode:
 		MODE.GAMEPLAY:
-			pass
+			sectorRing.fadeOut()
 		MODE.TACTICAL:
 			sectorRing.fadeIn()
 		MODE.STAR:
