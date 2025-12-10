@@ -46,6 +46,10 @@ folder_colors={
 "res://Util/": "gray"
 }
 
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true
+
 [input]
 
 mouse_wheel_up={

@@ -4,6 +4,9 @@
 
 extends Node2D
 
+@onready var visionArea = $VisionArea
+@onready var visionAreaRadius = $VisionArea/VisionAreaRadius
+
 @export var visionRadius := 1500.0
 @export var forwardConeAngle := 90.0   # 90° for small ships
 @export var rearConeAngle := 25.0      # narrow evasion detection
@@ -47,7 +50,7 @@ var enemiesInWeaponRadius := {}
 func _ready():
 	myShip = $".."
 	#var shape := CircleShape2D.new()
-	#shape.radius = visionRadius
+	visionAreaRadius.shape.radius = visionRadius
 	#$VisionArea/CollisionShape2D.shape = shape
 	$VisionArea.body_entered.connect(onBodyEntered)
 	$VisionArea.body_exited.connect(onBodyExited)

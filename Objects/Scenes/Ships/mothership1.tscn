@@ -9,7 +9,7 @@ radius = 128.0
 height = 296.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wpfyx"]
-radius = 15000.0
+radius = 500.0
 
 [node name="Ship" instance=ExtResource("1_hirjo")]
 stats = ExtResource("2_d54ll")
