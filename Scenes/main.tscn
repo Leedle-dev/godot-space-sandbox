@@ -17,8 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://bogiu8qhirihh" path="res://Art/shipArt/Unscaled_testing/Cruiser 1_96.png" id="12_k12tt"]
 [ext_resource type="Texture2D" uid="uid://qfpim4fapa3c" path="res://Art/shipArt/Unscaled_testing/Carrier 1_256.png" id="13_h1bgf"]
 [ext_resource type="Texture2D" uid="uid://cd57wx3c053ja" path="res://Art/shipArt/Unscaled_testing/Mothership 1_384.png" id="14_b3802"]
-[ext_resource type="PackedScene" uid="uid://bhj7m5k4dj6sk" path="res://UI/Galaxy/Sectors/SectorRingUI.tscn" id="15_wsu2k"]
 [ext_resource type="PackedScene" uid="uid://bdafgijwlekc0" path="res://UI/Galaxy/Sectors/SectorRingMapElement.tscn" id="18_fevyy"]
+[ext_resource type="PackedScene" uid="uid://c6i746e1a0phc" path="res://UI/Galaxy/StarSystems/StarSystemUI.tscn" id="19_fevyy"]
 
 [sub_resource type="Resource" id="Resource_6iyac"]
 script = ExtResource("4_d1ilt")
@@ -286,27 +286,6 @@ texture = ExtResource("14_b3802")
 
 [node name="SectorRingMapElement" parent="TacticalMapLayer" instance=ExtResource("18_fevyy")]
 
-[node name="ColorRect" type="ColorRect" parent="TacticalMapLayer"]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="StarMapLayer" type="CanvasLayer" parent="."]
 
-[node name="SectorRingUI" parent="TacticalMapLayer" instance=ExtResource("15_wsu2k")]
-visible = false
-offset_left = 448.0
-offset_right = 704.0
-offset_bottom = 256.0
-scale = Vector2(4, 4)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="StarSystemUI" parent="StarMapLayer" instance=ExtResource("19_fevyy")]

@@ -16,6 +16,8 @@ func _ready() -> void:
 	background.color.a = 1.0
 	self.modulate.a = 0.0
 	pivot_offset = size / 2
+	sectorRingUI.sectorRing.nameLabelStar.modulate.a = 0.0
+	sectorRingUI.sectorRing.nameLabel.modulate.a = 1.0
 	sectorRingUI.scaleElements(Vector2(scaleSize,scaleSize))
 	sectorRingUI.custom_minimum_size = Vector2(sectorRingUI.custom_minimum_size * scaleSize)
 

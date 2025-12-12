@@ -52,9 +52,13 @@ func tacticalInput(event : InputEvent) -> void:
 	if event.is_action_pressed("mouse_wheel_up"):
 		viewManager.switchMode(viewManager.MODE.GAMEPLAY)
 		cameraController.zoomIn()
+	if event.is_action_pressed("mouse_wheel_down"):
+		viewManager.switchMode(viewManager.MODE.STAR)
 
 func systemInput(event : InputEvent) -> void:
-	pass
+	if event.is_action_pressed("mouse_wheel_up"):
+		viewManager.switchMode(viewManager.MODE.TACTICAL)
+	
 	
 func galaxyInput(event : InputEvent) -> void:
 	pass

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cj7lcbepll1dj" path="res://UI/Galaxy/StarSystems/star_system_ui.gd" id="1_43rqj"]
 [ext_resource type="PackedScene" uid="uid://bhj7m5k4dj6sk" path="res://UI/Galaxy/Sectors/SectorRingUI.tscn" id="2_p2hw1"]
 
-[node name="StarSystemUI" type="Control" node_paths=PackedStringArray("outerSectors", "edgeSectors")]
+[node name="StarSystemUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,8 +11,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_43rqj")
-outerSectors = []
-edgeSectors = []
 
 [node name="Sectors" type="Control" parent="."]
 layout_mode = 1
@@ -24,31 +22,43 @@ grow_vertical = 2
 
 [node name="SectorRingUI1" parent="Sectors" instance=ExtResource("2_p2hw1")]
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI2" parent="Sectors" instance=ExtResource("2_p2hw1")]
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI3" parent="Sectors" instance=ExtResource("2_p2hw1")]
-visible = false
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI4" parent="Sectors" instance=ExtResource("2_p2hw1")]
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI5" parent="Sectors" instance=ExtResource("2_p2hw1")]
-visible = false
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI6" parent="Sectors" instance=ExtResource("2_p2hw1")]
-visible = false
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI7" parent="Sectors" instance=ExtResource("2_p2hw1")]
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI8" parent="Sectors" instance=ExtResource("2_p2hw1")]
-visible = false
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI9" parent="Sectors" instance=ExtResource("2_p2hw1")]
 layout_mode = 0
@@ -58,16 +68,19 @@ offset_right = 691.0
 offset_bottom = 1018.0
 
 [node name="SectorRingUI10" parent="Sectors" instance=ExtResource("2_p2hw1")]
-visible = false
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI11" parent="Sectors" instance=ExtResource("2_p2hw1")]
-visible = false
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI12" parent="Sectors" instance=ExtResource("2_p2hw1")]
-visible = false
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI13" parent="Sectors" instance=ExtResource("2_p2hw1")]
 layout_mode = 0
@@ -112,8 +125,9 @@ offset_right = 870.0
 offset_bottom = 664.0
 
 [node name="SectorRingUI19" parent="Sectors" instance=ExtResource("2_p2hw1")]
-visible = false
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
 
 [node name="SectorRingUI20" parent="Sectors" instance=ExtResource("2_p2hw1")]
 layout_mode = 0
@@ -123,5 +137,6 @@ offset_right = 1081.0
 offset_bottom = 664.0
 
 [node name="SectorRingUI21" parent="Sectors" instance=ExtResource("2_p2hw1")]
-visible = false
 layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0

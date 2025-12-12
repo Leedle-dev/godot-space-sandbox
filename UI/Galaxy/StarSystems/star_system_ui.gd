@@ -1,4 +1,5 @@
 extends Control
+class_name StarSystemUI
 
 ##
 # Offset Constants - used for building out the star system map using normalized vector offsets for relative positioning on the screen
@@ -6,22 +7,24 @@ extends Control
 
 const CENTER : float = 0.0
 
-const LEFTMOST: float = -0.5
-const LEFT: float = -0.25 
-const CENTERLEFT : float = -0.125
+const LEFTMOST: float = -0.75
+const LEFT: float = -0.375
+const CENTERLEFT : float = -0.1875
  
-const CENTERRIGHT : float = 0.125
-const RIGHT : float = 0.25
-const RIGHTMOST : float = 0.5
+const CENTERRIGHT : float = 0.1875
+const RIGHT : float = 0.375
+const RIGHTMOST : float = 0.75
 
-const UPMOST: float = -0.5
-const UP: float = -0.25
-const CENTERUP : float = -0.125
+const UPMOST: float = -0.75
+const UP: float = -0.375
+const CENTERUP : float = -0.1875
 
-const CENTERDOWN : float = 0.125
-const DOWN : float = 0.25
-const DOWNMOST : float = 0.5
+const CENTERDOWN : float = 0.1875
+const DOWN : float = 0.375
+const DOWNMOST : float = 0.75
 	
+
+var radius: float
 ## Array of offests for node positions
 # This is the grid ->
 # Positions are as follows ->
@@ -90,6 +93,8 @@ var offsets : Dictionary[int, Vector2] = {
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	layoutSectors()
+	self.modulate.a = 0.0
+	pivot_offset = size / 2
 	pass # Replace with function body.
 
 
@@ -99,9 +104,14 @@ func _process(delta: float) -> void:
 
 func layoutSectors() -> void:
 	var center = size * 0.5
-	var radius = min(size.x, size.y) * 0.5
+	center.x = center.x - 128
+	center.y = center.y - 128
+	print_debug(center)
+	radius = min(size.x, size.y) * 0.5
 	for i in range(sectors.size()):
 		placeSector(i, center, radius)
+		sectors[i].sectorRing.nameLabel.modulate.a = 0.0
+		sectors[i].sectorRing.nameLabelStar.modulate.a = 1.0
 	
 func placeSector(index : int, center : Vector2, radius : float) -> void:
 	sectors[index].position = center + offsets[index] * radius

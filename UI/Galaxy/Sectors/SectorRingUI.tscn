@@ -95,14 +95,13 @@ scale = Vector2(2, 2)
 texture = ExtResource("10_jvbia")
 
 [node name="SectorName_SectorView" type="Label" parent="SectorRing"]
-visible = false
 texture_filter = 1
 offset_top = 8.0
 offset_right = 262.0
 offset_bottom = 33.0
 theme_override_fonts/font = ExtResource("11_0qac2")
 theme_override_font_sizes/font_size = 16
-text = "Home of Light Cascade"
+text = "Home of Light "
 horizontal_alignment = 1
 
 [node name="SectorName_StarView" type="Label" parent="SectorRing"]
@@ -112,8 +111,8 @@ offset_top = 36.0
 offset_right = 220.0
 offset_bottom = 219.0
 theme_override_fonts/font = ExtResource("11_0qac2")
-theme_override_font_sizes/font_size = 16
-text = "Home of Light Cascade IX"
+theme_override_font_sizes/font_size = 24
+text = "Home of Light"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

@@ -11,6 +11,8 @@ func _ready() -> void:
 	playerController.viewManager = viewManager
 	viewManager.tacticalMapLayer = $TacticalMapLayer
 	viewManager.sectorRing = $TacticalMapLayer/SectorRingMapElement
+	viewManager.starMapLayer = $StarMapLayer
+	viewManager.starMap = $StarMapLayer/StarSystemUI
 	print("GameRoot READY")
 	print("Camera2D exists:", has_node("Camera2D"))
 	print("CameraController exists:", has_node("Camera2D"))
