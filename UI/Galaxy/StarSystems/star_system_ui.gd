@@ -25,6 +25,7 @@ const DOWNMOST : float = 0.75
 	
 
 var radius: float
+@onready var originalPosition := self.position
 ## Array of offests for node positions
 # This is the grid ->
 # Positions are as follows ->
