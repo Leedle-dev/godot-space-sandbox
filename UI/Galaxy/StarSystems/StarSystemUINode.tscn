@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://bh0r0u0pn8ihx"]
+
+[ext_resource type="Script" uid="uid://buord2nvxbdmp" path="res://UI/Galaxy/StarSystems/star_system_ui_node.gd" id="1_0unlw"]
+[ext_resource type="PackedScene" uid="uid://sohu6vctwuyv" path="res://UI/Galaxy/Sectors/sector_ring.tscn" id="2_qw1ow"]
+
+[node name="StarSystemUINode" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0unlw")
+
+[node name="StarSystem" type="Node2D" parent="."]
+
+[node name="SectorRing1" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing2" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing3" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing4" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing5" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing6" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing7" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing8" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing9" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing10" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing11" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing12" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing13" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing14" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing15" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing16" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing17" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing18" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing19" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing20" parent="StarSystem" instance=ExtResource("2_qw1ow")]
+
+[node name="SectorRing21" parent="StarSystem" instance=ExtResource("2_qw1ow")]

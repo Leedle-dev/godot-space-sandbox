@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://okoqscvrt1p6"]
+[gd_scene load_steps=26 format=3 uid="uid://okoqscvrt1p6"]
 
 [ext_resource type="Script" uid="uid://c4rishvyd3pxv" path="res://Scenes/Root/game_root.gd" id="1_b3802"]
 [ext_resource type="Texture2D" uid="uid://b5wdn4arggva" path="res://Art/shipArt/Assault 2.png" id="1_jjgbg"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://cd57wx3c053ja" path="res://Art/shipArt/Unscaled_testing/Mothership 1_384.png" id="14_b3802"]
 [ext_resource type="PackedScene" uid="uid://bdafgijwlekc0" path="res://UI/Galaxy/Sectors/SectorRingMapElement.tscn" id="18_fevyy"]
 [ext_resource type="PackedScene" uid="uid://c6i746e1a0phc" path="res://UI/Galaxy/StarSystems/StarSystemUI.tscn" id="19_fevyy"]
+[ext_resource type="PackedScene" uid="uid://bh0r0u0pn8ihx" path="res://UI/Galaxy/StarSystems/StarSystemUINode.tscn" id="20_hibaj"]
 
 [sub_resource type="Resource" id="Resource_6iyac"]
 script = ExtResource("4_d1ilt")
@@ -54,6 +55,29 @@ script = ExtResource("1_b3802")
 [node name="PlayerController" parent="." instance=ExtResource("2_fevyy")]
 
 [node name="ViewManager" parent="." instance=ExtResource("3_hibaj")]
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="ViewManager"]
+
+[node name="Background" type="ColorRect" parent="ViewManager/BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TacticalMapLayer" type="CanvasLayer" parent="ViewManager"]
+
+[node name="SectorRingMapElement" parent="ViewManager/TacticalMapLayer" instance=ExtResource("18_fevyy")]
+metadata/_edit_use_anchors_ = true
+
+[node name="StarMapLayer" type="CanvasLayer" parent="ViewManager"]
+
+[node name="StarSystemUI" parent="ViewManager/StarMapLayer" instance=ExtResource("19_fevyy")]
+visible = false
+metadata/_edit_use_anchors_ = true
+
+[node name="StarSystemUINode" parent="ViewManager/StarMapLayer" instance=ExtResource("20_hibaj")]
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("pCamHost", "pCam2dNoFollow", "pCam2dGlued", "pCam2dGroup", "pCam2dSimpleFollow", "pCam2dGroupFollow")]
 unique_name_in_owner = true
@@ -236,6 +260,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="1x1" type="Node2D" parent="."]
+visible = false
 
 [node name="Assault5" type="Sprite2D" parent="1x1"]
 position = Vector2(961, 418)
@@ -259,6 +284,7 @@ position = Vector2(1314, 408)
 texture = ExtResource("7_6bp64")
 
 [node name="1x2" type="Node2D" parent="."]
+visible = false
 
 [node name="Assault5" type="Sprite2D" parent="1x2"]
 position = Vector2(966, 729)
@@ -281,11 +307,3 @@ texture = ExtResource("13_h1bgf")
 texture_filter = 2
 position = Vector2(1267, 840)
 texture = ExtResource("14_b3802")
-
-[node name="TacticalMapLayer" type="CanvasLayer" parent="."]
-
-[node name="SectorRingMapElement" parent="TacticalMapLayer" instance=ExtResource("18_fevyy")]
-
-[node name="StarMapLayer" type="CanvasLayer" parent="."]
-
-[node name="StarSystemUI" parent="StarMapLayer" instance=ExtResource("19_fevyy")]

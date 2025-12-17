@@ -1,0 +1,112 @@
+[gd_scene load_steps=12 format=3 uid="uid://sohu6vctwuyv"]
+
+[ext_resource type="Script" uid="uid://cw2e4lt0w0t11" path="res://UI/Galaxy/Sectors/sector_ring.gd" id="1_eujg7"]
+[ext_resource type="Texture2D" uid="uid://ddpi5q8v445e3" path="res://Art/UI/Map/Sectors/SectorMapIcon.png" id="2_goyp8"]
+[ext_resource type="Texture2D" uid="uid://ci7wqg6bfbasc" path="res://Art/UI/Map/Sectors/JumpGate0.png" id="3_6dh41"]
+[ext_resource type="Texture2D" uid="uid://dcnksjfsglfyu" path="res://Art/UI/Map/Sectors/JumpGate1.png" id="4_6fpy6"]
+[ext_resource type="Texture2D" uid="uid://dgb0jlast30kt" path="res://Art/UI/Map/Sectors/JumpGate2.png" id="5_flic2"]
+[ext_resource type="Texture2D" uid="uid://bl0jo8do8hupn" path="res://Art/UI/Map/Sectors/JumpGate3.png" id="6_up57k"]
+[ext_resource type="Texture2D" uid="uid://o33la4bnlbnk" path="res://Art/UI/Map/Sectors/JumpGate4.png" id="7_t84gg"]
+[ext_resource type="Texture2D" uid="uid://cdr6rrvj5wngw" path="res://Art/UI/Map/Sectors/JumpGate5.png" id="8_4jnf6"]
+[ext_resource type="Texture2D" uid="uid://c4cfarxx6k225" path="res://Art/UI/Map/Sectors/JumpGate6.png" id="9_prgkc"]
+[ext_resource type="Texture2D" uid="uid://cbe7xe64ntehx" path="res://Art/UI/Map/Sectors/JumpGate7.png" id="10_1m3pt"]
+[ext_resource type="FontFile" uid="uid://86uo7gw2w500" path="res://Art/UI/Fonts/Silkscreen-Bold.ttf" id="11_fl4dt"]
+
+[node name="SectorRing" type="Node2D" node_paths=PackedStringArray("gateRects")]
+script = ExtResource("1_eujg7")
+gateRects = [NodePath("Gate0"), NodePath("Gate1"), NodePath("Gate2"), NodePath("Gate3"), NodePath("Gate4"), NodePath("Gate5"), NodePath("Gate6"), NodePath("Gate7")]
+
+[node name="BaseRing" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(2, 2)
+texture = ExtResource("2_goyp8")
+
+[node name="Gate0" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(2, 2)
+texture = ExtResource("3_6dh41")
+stretch_mode = 2
+
+[node name="Gate1" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(2, 2)
+texture = ExtResource("4_6fpy6")
+
+[node name="Gate2" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(2, 2)
+texture = ExtResource("5_flic2")
+
+[node name="Gate3" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(2, 2)
+texture = ExtResource("6_up57k")
+
+[node name="Gate4" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(2, 2)
+texture = ExtResource("7_t84gg")
+
+[node name="Gate5" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(2, 2)
+texture = ExtResource("8_4jnf6")
+
+[node name="Gate6" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(2, 2)
+texture = ExtResource("9_prgkc")
+
+[node name="Gate7" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(2, 2)
+texture = ExtResource("10_1m3pt")
+
+[node name="SectorName_SectorView" type="Label" parent="."]
+texture_filter = 1
+offset_top = 8.0
+offset_right = 262.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("11_fl4dt")
+theme_override_font_sizes/font_size = 16
+text = "Home of Light "
+horizontal_alignment = 1
+
+[node name="SectorName_StarView" type="Label" parent="."]
+texture_filter = 1
+offset_left = 36.0
+offset_top = 36.0
+offset_right = 220.0
+offset_bottom = 219.0
+theme_override_fonts/font = ExtResource("11_fl4dt")
+theme_override_font_sizes/font_size = 24
+text = "Home of Light"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

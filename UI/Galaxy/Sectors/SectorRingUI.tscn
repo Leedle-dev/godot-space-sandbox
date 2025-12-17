@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bhj7m5k4dj6sk"]
+[gd_scene load_steps=14 format=3 uid="uid://bhj7m5k4dj6sk"]
 
 [ext_resource type="Script" uid="uid://h8iaf6mcdjf8" path="res://UI/Galaxy/Sectors/sector_ring_ui.gd" id="1_d68le"]
 [ext_resource type="Texture2D" uid="uid://ddpi5q8v445e3" path="res://Art/UI/Map/Sectors/SectorMapIcon.png" id="2_0qac2"]
@@ -12,11 +12,16 @@
 [ext_resource type="Texture2D" uid="uid://c4cfarxx6k225" path="res://Art/UI/Map/Sectors/JumpGate6.png" id="9_ejqwu"]
 [ext_resource type="Texture2D" uid="uid://cbe7xe64ntehx" path="res://Art/UI/Map/Sectors/JumpGate7.png" id="10_jvbia"]
 [ext_resource type="FontFile" uid="uid://86uo7gw2w500" path="res://Art/UI/Fonts/Silkscreen-Bold.ttf" id="11_0qac2"]
+[ext_resource type="Script" uid="uid://cw4wo5ka2vkki" path="res://UI/Galaxy/Sectors/sector_ring_node.gd" id="13_vwud4"]
 
 [node name="SectorRingUI" type="Control"]
 custom_minimum_size = Vector2(256, 256)
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_d68le")
 
 [node name="SectorRing" type="Node2D" parent="."]
@@ -116,3 +121,7 @@ text = "Home of Light"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="SectorRingNode" type="Node2D" parent="."]
+script = ExtResource("13_vwud4")
+metadata/_custom_type_script = "uid://cw4wo5ka2vkki"

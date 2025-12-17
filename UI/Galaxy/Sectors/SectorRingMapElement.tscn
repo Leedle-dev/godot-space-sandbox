@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdafgijwlekc0"]
+[gd_scene load_steps=4 format=3 uid="uid://bdafgijwlekc0"]
 
 [ext_resource type="Script" uid="uid://doq3dj4uxl7yt" path="res://UI/Galaxy/Sectors/sector_ring_map_element.gd" id="1_ayrhr"]
+[ext_resource type="Script" uid="uid://cw4wo5ka2vkki" path="res://UI/Galaxy/Sectors/sector_ring_node.gd" id="2_5d7tn"]
 [ext_resource type="PackedScene" uid="uid://bhj7m5k4dj6sk" path="res://UI/Galaxy/Sectors/SectorRingUI.tscn" id="2_jnhf6"]
 
 [node name="SectorRingMapElement" type="Control"]
@@ -12,14 +13,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ayrhr")
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -30,3 +23,7 @@ grow_vertical = 2
 
 [node name="SectorRingUI" parent="CenterContainer" instance=ExtResource("2_jnhf6")]
 layout_mode = 2
+
+[node name="SectorRingNode" type="Node2D" parent="."]
+script = ExtResource("2_5d7tn")
+metadata/_custom_type_script = "uid://cw4wo5ka2vkki"
