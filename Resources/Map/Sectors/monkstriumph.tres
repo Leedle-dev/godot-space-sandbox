@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SectorInfo" load_steps=2 format=3 uid="uid://ccvqjwbb46ees"]
+
+[ext_resource type="Script" uid="uid://bpi2to6ibln0m" path="res://Util/Resources/Galaxy/sector_info.gd" id="1_ow5yk"]
+
+[resource]
+script = ExtResource("1_ow5yk")
+name = "Monk's Triumph"
+metadata/_custom_type_script = "uid://bpi2to6ibln0m"

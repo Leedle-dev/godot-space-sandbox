@@ -3,17 +3,12 @@ class_name SectorRingMapElement
 
 @onready var centerContainer : CenterContainer = $CenterContainer
 @onready var sectorRingUI : SectorRingUI = $CenterContainer/SectorRingUI
-@onready var background : ColorRect = $Background
-
-var default_clear_color
 var tween := create_tween()
 
 @export var scaleSize: float = 4.0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	default_clear_color = ProjectSettings.get_setting("rendering/environment/defaults/default_clear_color");
-	background.color = default_clear_color
-	background.color.a = 1.0
+
 	self.modulate.a = 0.0
 	pivot_offset = size / 2
 	sectorRingUI.sectorRing.nameLabelStar.modulate.a = 0.0

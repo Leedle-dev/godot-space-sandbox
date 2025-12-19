@@ -13,3 +13,4 @@ func setGateVisibility(sector: SectorInfo):
 
 func setSectorName(sector: SectorInfo):
 	nameLabel.text = sector.name
+	nameLabelStar.text = sector.name

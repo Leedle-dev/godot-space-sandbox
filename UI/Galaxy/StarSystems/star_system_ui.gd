@@ -5,6 +5,8 @@ class_name StarSystemUI
 # Offset Constants - used for building out the star system map using normalized vector offsets for relative positioning on the screen
 ##
 
+@export var starSystemInfo : SystemInfo
+
 const CENTER : float = 0.0
 
 const LEFTMOST: float = -0.75
@@ -111,8 +113,22 @@ func layoutSectors() -> void:
 	radius = min(size.x, size.y) * 0.5
 	for i in range(sectors.size()):
 		placeSector(i, center, radius)
-		sectors[i].sectorRing.nameLabel.modulate.a = 0.0
-		sectors[i].sectorRing.nameLabelStar.modulate.a = 1.0
+		if starSystemInfo.sectors[i] != null:
+			sectors[i].sectorRing.setSectorName(starSystemInfo.sectors[i])
+			sectors[i].sectorRing.nameLabel.modulate.a = 0.0
+			sectors[i].sectorRing.nameLabelStar.modulate.a = 1.0
+		else:
+			sectors[i].sectorRing.visible = false
+
 	
 func placeSector(index : int, center : Vector2, radius : float) -> void:
 	sectors[index].position = center + offsets[index] * radius
+
+func getNextValidIndex(currentIndex : int) -> int:
+	for i in range(starSystemInfo.sectors.size()):
+		#if i + currentIndex + 1 >= starSystemInfo.sectors.size():
+		#	print_debug("i (" + str(i) + ") greater than size. setting i to " + str(starSystemInfo.sectors.size() - (currentIndex + 1)))
+		#	i = starSystemInfo.sectors.size() - (currentIndex + 1)
+		if starSystemInfo.sectors[(i + currentIndex + 1) % starSystemInfo.sectors.size()] != null:
+			return (i + currentIndex + 1) % starSystemInfo.sectors.size()
+	return 0

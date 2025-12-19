@@ -12,15 +12,16 @@ var viewManager : ViewManager
 
 
 func _unhandled_input(event: InputEvent):
-	match viewManager.currentMode:
-		viewManager.MODE.GAMEPLAY:
-			gameplayInput(event)
-		viewManager.MODE.TACTICAL:
-			tacticalInput(event)
-		viewManager.MODE.STAR:
-			systemInput(event)
-		viewManager.MODE.GALAXY:
-			systemInput(event)
+	if not viewManager.isTweening:
+		match viewManager.currentMode:
+			viewManager.MODE.GAMEPLAY:
+				gameplayInput(event)
+			viewManager.MODE.TACTICAL:
+				tacticalInput(event)
+			viewManager.MODE.STAR:
+				systemInput(event)
+			viewManager.MODE.GALAXY:
+				systemInput(event)
 
 
 func gameplayInput(event : InputEvent) -> void:
@@ -30,7 +31,7 @@ func gameplayInput(event : InputEvent) -> void:
 	if event.is_action_pressed("mouse_wheel_down"):
 		# If player zooms out while camera zoom is max, swap to Tac view
 		if cameraController.currentZoomIndex == 1:
-			viewManager.switchMode(viewManager.MODE.TACTICAL)
+			viewManager.switchMode(viewManager.MODE.TACTICAL, false)
 		cameraController.zoomOut()
 
 	if (event.is_action_pressed("swap_pcam_nofollow")):
@@ -50,14 +51,14 @@ func gameplayInput(event : InputEvent) -> void:
 
 func tacticalInput(event : InputEvent) -> void:
 	if event.is_action_pressed("mouse_wheel_up"):
-		viewManager.switchMode(viewManager.MODE.GAMEPLAY)
+		viewManager.switchMode(viewManager.MODE.GAMEPLAY, true)
 		cameraController.zoomIn()
 	if event.is_action_pressed("mouse_wheel_down"):
-		viewManager.switchMode(viewManager.MODE.STAR)
+		viewManager.switchMode(viewManager.MODE.STAR, false)
 
 func systemInput(event : InputEvent) -> void:
 	if event.is_action_pressed("mouse_wheel_up"):
-		viewManager.switchMode(viewManager.MODE.TACTICAL)
+		viewManager.switchMode(viewManager.MODE.TACTICAL, true)
 	
 	
 func galaxyInput(event : InputEvent) -> void:
