@@ -61,9 +61,12 @@ func switchMode(mode : MODE, isZoomIn : bool):
 			resetTween()
 			if not isZoomIn:
 				#tween.parallel()
-				fade(sectorRing, 1.0, TWEEN_DURATION)
-				scale(sectorRing, 2.0, 1.0, TWEEN_DURATION, true)
+				#fade(sectorRing, 1.0, TWEEN_DURATION)
+				#scale(sectorRing, 2.0, 1.0, TWEEN_DURATION, true)
 				fadeColor(background, 1.0)
+				fade(starMap.sectors[currentSectorIndex], 1.0, TWEEN_DURATION, true)
+				fade(starMap, 1.0, TWEEN_DURATION, true)
+				tween.parallel().tween_method(Callable(self, "setZoomScale"),  1.0, 4.0, TWEEN_DURATION)
 				tween.finished.connect(doneTween)
 				#fade(starMap, 0.0, TWEEN_DURATION, true)
 				#scale(starMap, 1.0, 4.0, TWEEN_DURATION, true)
@@ -89,6 +92,7 @@ func switchMode(mode : MODE, isZoomIn : bool):
 			starMapOriginalPosition = starMap.position
 			fade(sectorRing, 0.0, TWEEN_DURATION)
 			scale(sectorRing, 1.0, 0.25, TWEEN_DURATION, true)
+			fadeArray(starMap.sectors, 1.0, TWEEN_DURATION, true)
 			fade(starMap, 1.0, TWEEN_DURATION, true)
 			tween.parallel().tween_method(Callable(self, "setZoomScale"),  4.0, 1.0, TWEEN_DURATION)
 			tween.finished.connect(doneTween)
@@ -96,7 +100,21 @@ func switchMode(mode : MODE, isZoomIn : bool):
 		MODE.GALAXY:
 			pass
 
+
+
+
+func setupStarZoom():
+	starMap.position = starMap.originalPosition
+	starMap.scale = Vector2(4,4)
+	zoomTarget = starMap
+	zoomCenter = starMap.size * 0.5
+	#var radius = starMap.radius
+	#var normalized := starMap.offsets[currentSectorIndex]
+	zoomFocus = zoomCenter + starMap.offsets[currentSectorIndex] * starMap.radius
+	zoomBasePosition = starMap.position + (zoomCenter - zoomFocus)
+
 func setZoomScale(value : float):
+	setupStarZoom()
 	zoomTarget.scale = Vector2(value,value)
 	zoomTarget.position = zoomBasePosition + (zoomFocus - zoomCenter) * (1.0 - value)
 
@@ -125,6 +143,11 @@ func resetTween() -> void:
 	#else:
 	#	returnee = create_tween()
 	#return returnee
+
+func fadeArray(variant : Array[SectorRingUI], alpha := 0.0, duration:= 0.4, parallel := false):
+	for vari in variant:
+		fade(vari, alpha, duration, parallel)
+	pass
 
 func fade(variant : Control, alpha := 0.0, duration := 0.4, parallel := false):
 	#killTween(variant)
@@ -167,6 +190,8 @@ func _ready() -> void:
 	default_clear_color = ProjectSettings.get_setting("rendering/environment/defaults/default_clear_color");
 	background.color = default_clear_color
 	background.color.a = 0.0
+	starMap.position = starMap.originalPosition
+	starMap.scale = Vector2(4,4)
 
 
 

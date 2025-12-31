@@ -97,6 +97,8 @@ var offsets : Dictionary[int, Vector2] = {
 func _ready() -> void:
 	layoutSectors()
 	self.modulate.a = 0.0
+	for sector in sectors:
+		sector.modulate.a = 0.0
 	pivot_offset = size / 2
 	pass # Replace with function body.
 
