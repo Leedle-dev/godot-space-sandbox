@@ -40,6 +40,8 @@ var currentSectorIndex : int = 0
 func doneTween():
 	isTweening = false
 	currentMode = targetMode
+	if currentMode == MODE.GAMEPLAY:
+		currentSectorIndex = starMap.getNextValidIndex(currentSectorIndex)
 
 func switchMode(mode : MODE, isZoomIn : bool):
 	if isTweening:
@@ -47,50 +49,33 @@ func switchMode(mode : MODE, isZoomIn : bool):
 	targetMode = mode
 	match targetMode:
 		MODE.GAMEPLAY:
-			#sectorRing.fadeOut()
-			print_debug(currentSectorIndex)
-			currentSectorIndex = starMap.getNextValidIndex(currentSectorIndex)
 			resetTween()
-			fade(sectorRing, 0.0, TWEEN_DURATION)
-			scale(sectorRing, 1.0, 2.0, TWEEN_DURATION, true)
 			fadeColor(background)
+			fade(starMap, 0.0, TWEEN_DURATION, true)
+			tween.parallel().tween_method(Callable(self, "setZoomScale"),  4.0, 8.0, TWEEN_DURATION)
 			tween.finished.connect(doneTween)
 		MODE.TACTICAL:
-			#sectorRing.fadeIn()
-			sectorRing.sectorRingUI.sectorRing.setSectorName(starMap.starSystemInfo.sectors[currentSectorIndex])
 			resetTween()
+			fadeColor(background, 1.0)
+			fade(starMap, 1.0, TWEEN_DURATION, true)
+			fade(starMap.sectors[currentSectorIndex].sectorRing.nameLabel, 1.0, TWEEN_DURATION, true)
+			fade(starMap.sectors[currentSectorIndex].sectorRing.nameLabelStar, 0.0, TWEEN_DURATION, true)
 			if not isZoomIn:
-				#tween.parallel()
-				#fade(sectorRing, 1.0, TWEEN_DURATION)
-				#scale(sectorRing, 2.0, 1.0, TWEEN_DURATION, true)
-				fadeColor(background, 1.0)
+				starMap.sectors[currentSectorIndex].sectorRing.nameLabelStar.modulate.a = 0.0
+				fadeArray(starMap.sectors, 0.0, TWEEN_DURATION/2, true, currentSectorIndex)
 				fade(starMap.sectors[currentSectorIndex], 1.0, TWEEN_DURATION, true)
-				fade(starMap, 1.0, TWEEN_DURATION, true)
-				tween.parallel().tween_method(Callable(self, "setZoomScale"),  1.0, 4.0, TWEEN_DURATION)
+				tween.parallel().tween_method(Callable(self, "setZoomScale"),  8.0, 4.0, TWEEN_DURATION)
 				tween.finished.connect(doneTween)
-				#fade(starMap, 0.0, TWEEN_DURATION, true)
-				#scale(starMap, 1.0, 4.0, TWEEN_DURATION, true)
 			else:
-				#tween.parallel()
-				fade(sectorRing, 1.0, TWEEN_DURATION)
-				scale(sectorRing, 0.25, 1.0, TWEEN_DURATION, true)
-				fade(starMap, 0.0, TWEEN_DURATION, true)
+				fadeArray(starMap.sectors, 0.0, TWEEN_DURATION, true, currentSectorIndex)
 				tween.parallel().tween_method(Callable(self, "setZoomScale"),  1.0, 4.0, TWEEN_DURATION)
 				tween.finished.connect(doneTween)
-				#scale(starMap, 1.0, 4.0, TWEEN_DURATION, true)
-				#shift(starMap, starMapOriginalPosition, TWEEN_DURATION, true)
 		MODE.STAR:
-			starMap.position = starMap.originalPosition
-			starMap.scale = Vector2(4,4)
-			zoomTarget = starMap
-			zoomCenter = starMap.size * 0.5
-			var radius = starMap.radius
-			var normalized := starMap.offsets[currentSectorIndex]
-			zoomFocus = zoomCenter + normalized * radius
-			zoomBasePosition = starMap.position + (zoomCenter - zoomFocus)
 			resetTween()
 			starMapOriginalPosition = starMap.position
-			fade(sectorRing, 0.0, TWEEN_DURATION)
+			fade(starMap.sectors[currentSectorIndex].sectorRing.nameLabel, 0.0, TWEEN_DURATION, true)
+			fade(starMap.sectors[currentSectorIndex].sectorRing.nameLabelStar, 1.0, TWEEN_DURATION, true)
+			fade(sectorRing, 0.0, TWEEN_DURATION, true)
 			scale(sectorRing, 1.0, 0.25, TWEEN_DURATION, true)
 			fadeArray(starMap.sectors, 1.0, TWEEN_DURATION, true)
 			fade(starMap, 1.0, TWEEN_DURATION, true)
@@ -144,9 +129,10 @@ func resetTween() -> void:
 	#	returnee = create_tween()
 	#return returnee
 
-func fadeArray(variant : Array[SectorRingUI], alpha := 0.0, duration:= 0.4, parallel := false):
-	for vari in variant:
-		fade(vari, alpha, duration, parallel)
+func fadeArray(variant : Array[SectorRingUI], alpha := 0.0, duration:= 0.4, parallel := false, exclude := -1):
+	for i in range(variant.size()):
+		if exclude != i:
+			fade(variant[i], alpha, duration, parallel)
 	pass
 
 func fade(variant : Control, alpha := 0.0, duration := 0.4, parallel := false):

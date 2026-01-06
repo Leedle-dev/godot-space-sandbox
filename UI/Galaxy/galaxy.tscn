@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bfuo4g1mfplqn"]
+
+[node name="Galaxy" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="StarSystems" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
