@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuad5r5b6tmbe"]
+
+[ext_resource type="Script" uid="uid://g7ndkj26s6os" path="res://UI/Galaxy/star_system_marker.gd" id="1_laqej"]
+[ext_resource type="Texture2D" uid="uid://bfcfsntrwkmbm" path="res://Art/UI/Map/Galaxy/StarMapMarker.png" id="1_mjdfo"]
+[ext_resource type="FontFile" uid="uid://86uo7gw2w500" path="res://Art/UI/Fonts/Silkscreen-Bold.ttf" id="2_laqej"]
+
+[node name="StarSystemMarker" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_laqej")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_mjdfo")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 0
+offset_right = 162.0
+offset_bottom = 23.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_laqej")
+theme_override_font_sizes/font_size = 32
+text = "Example Star System"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

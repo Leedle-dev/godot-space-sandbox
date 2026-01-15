@@ -16,6 +16,7 @@ var default_clear_color
 @onready var sectorRing : SectorRingMapElement = $TacticalMapLayer/SectorRingMapElement
 @onready var starMapLayer : CanvasLayer = $StarMapLayer
 @onready var starMap : StarSystemUI = $StarMapLayer/StarSystemUI
+@onready var galaxyMap : GalaxyMapUI = $StarMapLayer/GalaxyMapUI
 #var colorRect : ColorRect
 
 var switchingLayers : bool = false
@@ -30,10 +31,11 @@ var currentMode : MODE
 var targetMode : MODE
 var tween : Tween
 var isTweening : bool = false
-var zoomFocus: Vector2
-var zoomCenter: Vector2
-var zoomBasePosition: Vector2
-var zoomTarget: Control
+#
+#var zoomFocus: Vector2
+#var zoomCenter: Vector2
+#var zoomBasePosition: Vector2
+#var zoomTarget: Control
 
 var currentSectorIndex : int = 0
 
@@ -52,7 +54,8 @@ func switchMode(mode : MODE, isZoomIn : bool):
 			resetTween()
 			fadeColor(background)
 			fade(starMap, 0.0, TWEEN_DURATION, true)
-			tween.parallel().tween_method(Callable(self, "setZoomScale"),  4.0, 8.0, TWEEN_DURATION)
+			setupStarZoom()
+			tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  4.0, 8.0, TWEEN_DURATION)
 			tween.finished.connect(doneTween)
 		MODE.TACTICAL:
 			resetTween()
@@ -64,11 +67,13 @@ func switchMode(mode : MODE, isZoomIn : bool):
 				starMap.sectors[currentSectorIndex].sectorRing.nameLabelStar.modulate.a = 0.0
 				fadeArray(starMap.sectors, 0.0, TWEEN_DURATION/2, true, currentSectorIndex)
 				fade(starMap.sectors[currentSectorIndex], 1.0, TWEEN_DURATION, true)
-				tween.parallel().tween_method(Callable(self, "setZoomScale"),  8.0, 4.0, TWEEN_DURATION)
+				setupStarZoom()
+				tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  8.0, 4.0, TWEEN_DURATION)
 				tween.finished.connect(doneTween)
 			else:
 				fadeArray(starMap.sectors, 0.0, TWEEN_DURATION, true, currentSectorIndex)
-				tween.parallel().tween_method(Callable(self, "setZoomScale"),  1.0, 4.0, TWEEN_DURATION)
+				setupStarZoom()
+				tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  1.0, 4.0, TWEEN_DURATION)
 				tween.finished.connect(doneTween)
 		MODE.STAR:
 			resetTween()
@@ -79,29 +84,67 @@ func switchMode(mode : MODE, isZoomIn : bool):
 			scale(sectorRing, 1.0, 0.25, TWEEN_DURATION, true)
 			fadeArray(starMap.sectors, 1.0, TWEEN_DURATION, true)
 			fade(starMap, 1.0, TWEEN_DURATION, true)
-			tween.parallel().tween_method(Callable(self, "setZoomScale"),  4.0, 1.0, TWEEN_DURATION)
-			tween.finished.connect(doneTween)
-			
+			setupStarZoom()
+			tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  4.0, 1.0, TWEEN_DURATION)
+			tween.finished.connect(doneTween)	
 		MODE.GALAXY:
-			pass
+			resetTween()
+			fade(starMap, 0.0, TWEEN_DURATION) # Fade Out StarMap
+			setupStarZoom() # Set zoomtarget to 
+			tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  1.0, 0.5, TWEEN_DURATION)
 
+			fade(galaxyMap, 1.0, TWEEN_DURATION, true)
+			setupGalaxyZoom()
+			tween.parallel().tween_method(Callable(self, "setZoomScaleGalaxy"), 4.0, 1.0, TWEEN_DURATION)
+			tween.finished.connect(doneTween)
+			#pass
 
+func galaxyZoom(mousePosition: Vector2):
+	if galaxyMap.mapContainer.scale.x > 0.25:
+		resetTween()
+		scale(galaxyMap.mapContainer, galaxyMap.mapContainer.scale.x, galaxyMap.mapContainer.scale.x*0.9, 0.05, false)
+		tween.finished.connect(doneTween)
+	#var before = (mousePosition - galaxyMap.mapContainer.position) / galaxyMap.mapContainer.scale
+	#galaxyMap.mapContainer.scale *= 0.95
+	#var after = before * galaxyMap.mapContainer.scale
+	#galaxyMap.mapContainer.position += mousePosition - (galaxyMap.mapContainer.position + after)
 
-
+var starMapFocus : Vector2
+var starMapBasePosition : Vector2
+var starMapCenter : Vector2
 func setupStarZoom():
 	starMap.position = starMap.originalPosition
-	starMap.scale = Vector2(4,4)
-	zoomTarget = starMap
-	zoomCenter = starMap.size * 0.5
-	#var radius = starMap.radius
-	#var normalized := starMap.offsets[currentSectorIndex]
-	zoomFocus = zoomCenter + starMap.offsets[currentSectorIndex] * starMap.radius
-	zoomBasePosition = starMap.position + (zoomCenter - zoomFocus)
+	#starMap.scale = Vector2(4,4) This line is being overwritten in setZoomScaleStar()
+	starMapCenter = starMap.size * 0.5
+	starMapFocus = starMapCenter + starMap.offsets[currentSectorIndex] * starMap.radius
+	starMapBasePosition = starMap.position + (starMapCenter - starMapFocus)
 
-func setZoomScale(value : float):
+var galaxyMapFocus : Vector2
+var galaxyMapBasePosition : Vector2
+var galaxyMapCenter : Vector2
+func setupGalaxyZoom():
+	print_debug("getting random star system")
+	print_debug("galaxy.mapcontainer.size = " + str(galaxyMap.mapContainer.size))
+	galaxyMapCenter = get_viewport_rect().size * 0.5
+	var marker = galaxyMap.markers.get_child(
+		randi_range(
+			0, galaxyMap.markers.get_child_count()-1
+		)
+	)
+	galaxyMapFocus = marker.position + marker.texture.size * 0.5
+	galaxyMapBasePosition = galaxyMap.mapContainer.position + (galaxyMapCenter - galaxyMapFocus)
+	
+
+func setZoomScaleStar(value : float):
 	setupStarZoom()
-	zoomTarget.scale = Vector2(value,value)
-	zoomTarget.position = zoomBasePosition + (zoomFocus - zoomCenter) * (1.0 - value)
+	starMap.scale = Vector2(value,value)
+	starMap.position = starMapBasePosition + (starMapFocus - starMapCenter) * (1.0 - value)
+
+func setZoomScaleGalaxy(value : float):
+	#setupGalaxyZoom()
+	galaxyMap.mapContainer.scale = Vector2(value,value)
+	#galaxyMap.mapContainer.position = galaxyMapBasePosition + (galaxyMapFocus - galaxyMapCenter) * (1.0 - value)
+	galaxyMap.mapContainer.position = galaxyMapCenter - galaxyMapFocus * value
 
 func changeView(mode : MODE):
 	pass

@@ -21,7 +21,7 @@ func _unhandled_input(event: InputEvent):
 			viewManager.MODE.STAR:
 				systemInput(event)
 			viewManager.MODE.GALAXY:
-				systemInput(event)
+				galaxyInput(event)
 
 
 func gameplayInput(event : InputEvent) -> void:
@@ -59,10 +59,14 @@ func tacticalInput(event : InputEvent) -> void:
 func systemInput(event : InputEvent) -> void:
 	if event.is_action_pressed("mouse_wheel_up"):
 		viewManager.switchMode(viewManager.MODE.TACTICAL, true)
+	if event.is_action_pressed("mouse_wheel_down"):
+		viewManager.switchMode(viewManager.MODE.GALAXY, false)
 	
 	
 func galaxyInput(event : InputEvent) -> void:
-	pass
+	print_debug("GalaxtInput detected")
+	viewManager.galaxyZoom(get_local_mouse_position())
+	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
