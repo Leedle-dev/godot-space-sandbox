@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cuad5r5b6tmbe"]
 
-[ext_resource type="Script" uid="uid://g7ndkj26s6os" path="res://UI/Galaxy/star_system_marker.gd" id="1_laqej"]
+[ext_resource type="Script" uid="uid://g7ndkj26s6os" path="res://UI/Galaxy/GalaxyMap/star_system_marker.gd" id="1_laqej"]
 [ext_resource type="Texture2D" uid="uid://bfcfsntrwkmbm" path="res://Art/UI/Map/Galaxy/StarMapMarker.png" id="1_mjdfo"]
 [ext_resource type="FontFile" uid="uid://86uo7gw2w500" path="res://Art/UI/Fonts/Silkscreen-Bold.ttf" id="2_laqej"]
 

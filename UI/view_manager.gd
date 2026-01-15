@@ -99,15 +99,29 @@ func switchMode(mode : MODE, isZoomIn : bool):
 			tween.finished.connect(doneTween)
 			#pass
 
-func galaxyZoom(mousePosition: Vector2):
-	if galaxyMap.mapContainer.scale.x > 0.25:
-		resetTween()
-		scale(galaxyMap.mapContainer, galaxyMap.mapContainer.scale.x, galaxyMap.mapContainer.scale.x*0.9, 0.05, false)
-		tween.finished.connect(doneTween)
-	#var before = (mousePosition - galaxyMap.mapContainer.position) / galaxyMap.mapContainer.scale
-	#galaxyMap.mapContainer.scale *= 0.95
-	#var after = before * galaxyMap.mapContainer.scale
-	#galaxyMap.mapContainer.position += mousePosition - (galaxyMap.mapContainer.position + after)
+## Zooming logic, called by the playerController on mousewheel input.
+## mousePosition is a system call the gets the mouseposition
+## direction is an int to indicate mouse scroll up (1) or down (-1)
+var galaxyZoomScale : Vector2
+func galaxyZoom(mousePosition: Vector2, direction: int):
+	galaxyZoomScale = galaxyMap.mapContainer.scale
+	# Mouse wheel up, zoom in
+	if direction > 0:
+		# If we are not as zoomed in as possible, zoom in
+		#if galaxyMap.mapContainer.scale.x < 1.0:
+			setZoomScaleGalaxy(galaxyZoomScale.x * 1.1)
+	elif direction < 0:
+		#if galaxyMap.mapContainer.scale.x > 0.25:
+			setZoomScaleGalaxy(galaxyZoomScale.x * 0.9)
+			#scale(galaxyMap.mapContainer, galaxyMap.mapContainer.scale.x, galaxyMap.mapContainer.scale.x*0.9, 0.05, false)
+			#tween.finished.connect(doneTween)
+
+func panGalaxy(delta: Vector2):
+	galaxyMapFocus -= delta / galaxyMap.mapContainer.scale.x
+	applyGalaxyTransform()
+
+func applyGalaxyTransform():
+	galaxyMap.mapContainer.position = galaxyMapCenter - galaxyMapFocus * galaxyMap.mapContainer.scale.x
 
 var starMapFocus : Vector2
 var starMapBasePosition : Vector2
@@ -145,6 +159,8 @@ func setZoomScaleGalaxy(value : float):
 	galaxyMap.mapContainer.scale = Vector2(value,value)
 	#galaxyMap.mapContainer.position = galaxyMapBasePosition + (galaxyMapFocus - galaxyMapCenter) * (1.0 - value)
 	galaxyMap.mapContainer.position = galaxyMapCenter - galaxyMapFocus * value
+
+
 
 func changeView(mode : MODE):
 	pass

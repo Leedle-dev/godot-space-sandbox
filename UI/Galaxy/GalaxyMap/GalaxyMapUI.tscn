@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfuo4g1mfplqn"]
+
+[ext_resource type="PackedScene" uid="uid://cuad5r5b6tmbe" path="res://UI/Galaxy/GalaxyMap/StarSystemMarker.tscn" id="1_gunpf"]
+[ext_resource type="Script" uid="uid://7x8euinu5j5m" path="res://UI/Galaxy/GalaxyMap/galaxy_map_ui.gd" id="1_kkqsc"]
+[ext_resource type="PackedScene" uid="uid://vqcwhb38l2ip" path="res://UI/Galaxy/GalaxyMap/galaxyRings.tscn" id="2_kogf1"]
+
+[node name="GalaxyMapUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kkqsc")
+
+[node name="MapContainer" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="GalaxyRings" parent="MapContainer" instance=ExtResource("2_kogf1")]
+layout_mode = 1
+
+[node name="Markers" type="Control" parent="MapContainer"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StarSystemMarker" parent="MapContainer/Markers" instance=ExtResource("1_gunpf")]
+layout_mode = 1

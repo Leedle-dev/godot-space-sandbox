@@ -64,8 +64,14 @@ func systemInput(event : InputEvent) -> void:
 	
 	
 func galaxyInput(event : InputEvent) -> void:
-	print_debug("GalaxtInput detected")
-	viewManager.galaxyZoom(get_local_mouse_position())
+	if event.is_action_pressed("mouse_wheel_up"):
+		viewManager.galaxyZoom(get_local_mouse_position(), 1)
+	if event.is_action_pressed("mouse_wheel_down"):
+		viewManager.galaxyZoom(get_local_mouse_position(), -1)
+	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT:
+		viewManager.panGalaxy(get_local_mouse_position())
+
+
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

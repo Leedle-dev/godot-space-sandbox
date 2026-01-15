@@ -3,16 +3,12 @@ class_name GalaxyMapUI
 
 @onready var mapContainer = $MapContainer
 @onready var markers = $MapContainer/Markers
-var markerScene : PackedScene = preload("res://UI/Galaxy/StarSystemMarker.tscn")
+@onready var backgroundRings = $MapContainer/GalaxyRings
+var markerScene : PackedScene = preload("res://UI/Galaxy/GalaxyMap/StarSystemMarker.tscn")
 
 const minStarTexSize = 256
 
-var originLimit :    Vector2 = Vector2(-2048, 2048)
-var innerLimit :     Vector2 = Vector2(-4096-minStarTexSize, 4096+minStarTexSize)
-var outerLimit :     Vector2 = Vector2(-6144-(minStarTexSize*2), 6144+(minStarTexSize*2))
-var perimeterLimit : Vector2 = Vector2(-8192-(minStarTexSize*3), 8192+(minStarTexSize*3))
-var expanseLimit :   Vector2 = Vector2(-10240-(minStarTexSize*4), 10240+(minStarTexSize*4))
-var edgeLimit :      Vector2 = Vector2(-12288-(minStarTexSize*5), 12288+(minStarTexSize*5))
+
 
 var galaxyLimits : Dictionary[Galaxy.GalaxyLayer, Vector2] = {
 	Galaxy.GalaxyLayer.ORIGIN: Vector2(-2048, 2048),
@@ -41,6 +37,10 @@ func _ready() -> void:
 		marker.label.text = Galaxy.GalaxyLayer.keys()[layer] + " " + str(snapped(marker.position.x, 0.01)) + "x" + str(snapped(marker.position.y, 0.01))
 	self.modulate.a = 0.0
 
+	var ringData = buildRings()
+	backgroundRings.rings = ringData
+	backgroundRings.queue_redraw()
+
 
 
 func pickRandomPosition(layer : Galaxy.GalaxyLayer) -> Vector2:
@@ -68,6 +68,19 @@ func pickRandomPositionInRing(layer : Galaxy.GalaxyLayer) -> Vector2:
 	var u = randf()
 	var r = sqrt(u * (maxLayer.y * maxLayer.y - minLayer.y * minLayer.y) + minLayer.y * minLayer.y)
 	return Vector2(cos(theta), sin(theta)) * r
+
+func buildRings() -> Array :
+	var rings := []
+	var previousRadius := 0.0
+	for layer in Galaxy.GalaxyLayer:
+		print_debug(layer)
+		var limit : Vector2 = galaxyLimits[Galaxy.GalaxyLayer.get(layer)]
+		var radius : float = abs(limit.y)
+		rings.append({"layer" : Galaxy.GalaxyLayer.get(layer), "inner" : previousRadius, "outer" : radius})
+		previousRadius = radius
+
+	return rings
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
