@@ -10,9 +10,10 @@ anchors_preset = 0
 script = ExtResource("1_laqej")
 
 [node name="Button" type="Button" parent="."]
+visible = false
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_right = 257.0
+offset_bottom = 255.0
 
 [node name="TextureRect" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(256, 256)

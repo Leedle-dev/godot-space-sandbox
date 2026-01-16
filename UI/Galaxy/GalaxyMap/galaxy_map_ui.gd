@@ -9,7 +9,7 @@ var markerScene : PackedScene = preload("res://UI/Galaxy/GalaxyMap/StarSystemMar
 const minStarTexSize = 256
 
 
-
+"""
 var galaxyLimits : Dictionary[Galaxy.GalaxyLayer, Vector2] = {
 	Galaxy.GalaxyLayer.ORIGIN: Vector2(-2048, 2048),
 	Galaxy.GalaxyLayer.INNER: Vector2(-4096-minStarTexSize, 4096+minStarTexSize),
@@ -17,6 +17,15 @@ var galaxyLimits : Dictionary[Galaxy.GalaxyLayer, Vector2] = {
 	Galaxy.GalaxyLayer.PERIMETER: Vector2(-8192-(minStarTexSize*3), 8192+(minStarTexSize*3)),
 	Galaxy.GalaxyLayer.EXPANSE: Vector2(-10240-(minStarTexSize*4), 10240+(minStarTexSize*4)),
 	Galaxy.GalaxyLayer.EDGE: Vector2(-12288-(minStarTexSize*5), 12288+(minStarTexSize*5))
+}
+"""
+var galaxyLimits : Dictionary[Galaxy.GalaxyLayer, Vector2] = {
+	Galaxy.GalaxyLayer.ORIGIN: Vector2(-1536, 1536),
+	Galaxy.GalaxyLayer.INNER: Vector2(-3072-minStarTexSize, 3072+minStarTexSize),
+	Galaxy.GalaxyLayer.OUTER: Vector2(-4608-(minStarTexSize*2), 4608+(minStarTexSize*2)),
+	Galaxy.GalaxyLayer.PERIMETER: Vector2(-6144-(minStarTexSize*3), 6144+(minStarTexSize*3)),
+	Galaxy.GalaxyLayer.EXPANSE: Vector2(-7680-(minStarTexSize*4), 7680+(minStarTexSize*4)),
+	Galaxy.GalaxyLayer.EDGE: Vector2(-9216-(minStarTexSize*5), 9216+(minStarTexSize*5))
 }
 
 ## Example coordinates for star system markers.
