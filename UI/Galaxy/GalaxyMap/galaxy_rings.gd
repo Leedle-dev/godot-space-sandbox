@@ -24,7 +24,7 @@ signal ringClicked(layer)
 
 @export var radii: PackedFloat32Array = [2048, 4096, 6144, 8192, 10240, 12288]
 @export var thickness : float = 4.0
-@export var center : Vector2 = Vector2.ZERO
+
 
 @export var rings := []
 
@@ -34,8 +34,10 @@ var pressedIndex = -1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	#custom_minimum_size = Vector2(20000,20000)
-	#pivot_offset = Vector2(custom_minimum_size.x/2, custom_minimum_size.y/2)
+	size = Vector2(25000,25000)
+	position = -size * 0.5
+	print("size of ring" + str(size))
+	#pivot_offset = Vector2(size.x/2, size.y/2)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -53,11 +55,14 @@ func _process(delta: float) -> void:
 		queue_redraw()
 
 func _gui_input(event: InputEvent) -> void:
+	#print_debug("gui_input")
 	if hoverIndex < 0:
+	#	print_debug("returning")
 		return
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
+			print_debug("Ring pressed!!! Redraw here")
 			pressedIndex = hoverIndex
 			ringPressed.emit(rings[pressedIndex].layer)
 			queue_redraw()
@@ -77,23 +82,26 @@ func mouseRingPosition(radius : float) -> int:
 
 func _draw() -> void:
 	for ring in rings:
-		drawRing(center, ring.inner, ring.outer, getColorFromLayer(ring.layer))
+		drawRing(ring.inner, ring.outer, getColorFromLayer(ring.layer))
 	# If the mouse is hovering over a galaxy ring, highlight it
 	if hoverIndex == 0:
 		drawInteractArc(float(rings[hoverIndex].outer), Color.BLACK, OUTLINETHICKNESS)
 	elif hoverIndex > 0:
 		drawInteractArc(float(rings[hoverIndex].inner), Color.BLACK, OUTLINETHICKNESS)
 		drawInteractArc(float(rings[hoverIndex].outer), Color.BLACK, OUTLINETHICKNESS)
-	if pressedIndex == 0:
-		drawInteractArc(float(rings[hoverIndex].outer), Color.WHITE, PRESSEDTHICKNESS)
-	elif pressedIndex > 0:
+	#if pressedIndex == 0:
+	#	drawInteractArc(float(rings[hoverIndex].outer), Color.WHITE, PRESSEDTHICKNESS)
+	#elif pressedIndex > 0:
+	if pressedIndex >= 0:
 		drawInteractArc(float(rings[hoverIndex].inner), Color.WHITE, PRESSEDTHICKNESS)
 		drawInteractArc(float(rings[hoverIndex].outer), Color.WHITE, PRESSEDTHICKNESS)
+	draw_rect(Rect2(Vector2.ZERO, size), Color(1,0,0,0.08), true)
 
 func drawInteractArc(outerRadius: float, color : Color, thickness : float):
-	draw_arc(Vector2.ZERO, outerRadius, 0.0, TAU, 64, color, thickness, true)
+	draw_arc(size * 0.5, outerRadius, 0.0, TAU, 64, color, thickness, true)
 
-func drawRing(center: Vector2, innerRadius : float, outerRadius: float, color: Color, steps := 64):
+func drawRing(innerRadius : float, outerRadius: float, color: Color, steps := 64):
+	var center = size * 0.5
 	var points := PackedVector2Array()
 	var edgePoints := PackedVector2Array()
 
