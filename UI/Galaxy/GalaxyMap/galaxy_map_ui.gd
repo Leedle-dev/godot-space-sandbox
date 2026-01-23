@@ -1,6 +1,9 @@
 extends Control
 class_name GalaxyMapUI
 
+# used to bubble up the signal to viewManager
+signal ringClicked(layer)
+
 @onready var mapContainer = $MapContainer
 @onready var markers = $MapContainer/Markers
 @onready var backgroundRings = $MapContainer/GalaxyRings
@@ -49,6 +52,11 @@ func _ready() -> void:
 	var ringData = buildRings()
 	backgroundRings.rings = ringData
 	backgroundRings.queue_redraw()
+
+	# bubble up signal example here
+	backgroundRings.ringClicked.connect(func(layer):
+		ringClicked.emit(layer)
+	)
 
 
 

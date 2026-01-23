@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://okoqscvrt1p6"]
+[gd_scene load_steps=28 format=3 uid="uid://okoqscvrt1p6"]
 
 [ext_resource type="Script" uid="uid://c4rishvyd3pxv" path="res://Scenes/Root/game_root.gd" id="1_b3802"]
 [ext_resource type="Texture2D" uid="uid://b5wdn4arggva" path="res://Art/shipArt/Assault 2.png" id="1_jjgbg"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bfuo4g1mfplqn" path="res://UI/Galaxy/GalaxyMap/GalaxyMapUI.tscn" id="9_pdsj5"]
 [ext_resource type="Texture2D" uid="uid://bu6ds3ep1srfa" path="res://Art/shipArt/Unscaled_testing/Interceptor 1_32.png" id="10_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://cbcy4m35fon30" path="res://Art/shipArt/Unscaled_testing/Cloaker 1_12.png" id="11_wsu2k"]
+[ext_resource type="PackedScene" uid="uid://bcxrwt0qwym6h" path="res://UI/InfoPanel/InfoPanel.tscn" id="12_ee4r6"]
 [ext_resource type="Texture2D" uid="uid://bogiu8qhirihh" path="res://Art/shipArt/Unscaled_testing/Cruiser 1_96.png" id="12_k12tt"]
 [ext_resource type="Texture2D" uid="uid://qfpim4fapa3c" path="res://Art/shipArt/Unscaled_testing/Carrier 1_256.png" id="13_h1bgf"]
 [ext_resource type="Texture2D" uid="uid://cd57wx3c053ja" path="res://Art/shipArt/Unscaled_testing/Mothership 1_384.png" id="14_b3802"]
@@ -144,6 +145,25 @@ grow_vertical = 2
 starSystemInfo = ExtResource("6_hibaj")
 
 [node name="GalaxyMapUI" parent="ViewManager/StarMapLayer" instance=ExtResource("9_pdsj5")]
+
+[node name="HUDLayer" type="CanvasLayer" parent="ViewManager"]
+
+[node name="PanelLayer" type="CanvasLayer" parent="ViewManager"]
+
+[node name="OverlayRoot" type="Control" parent="ViewManager/PanelLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InfoPanel" parent="ViewManager/PanelLayer/OverlayRoot" instance=ExtResource("12_ee4r6")]
+clip_contents = true
+layout_mode = 1
+offset_left = 1410.0
+offset_right = 1417.0
 
 [node name="Distance Labelled" type="Node" parent="."]
 

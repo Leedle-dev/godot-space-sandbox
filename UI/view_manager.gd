@@ -17,6 +17,8 @@ var default_clear_color
 @onready var starMapLayer : CanvasLayer = $StarMapLayer
 @onready var starMap : StarSystemUI = $StarMapLayer/StarSystemUI
 @onready var galaxyMap : GalaxyMapUI = $StarMapLayer/GalaxyMapUI
+@onready var panelLayer : CanvasLayer = $PanelLayer
+@onready var infoPanel : InfoPanel = $PanelLayer/OverlayRoot/InfoPanel
 #var colorRect : ColorRect
 
 var switchingLayers : bool = false
@@ -237,8 +239,24 @@ func _ready() -> void:
 	background.color.a = 0.0
 	starMap.position = starMap.originalPosition
 	starMap.scale = Vector2(4,4)
+	galaxyMap.ringClicked.connect(openInfoPanel)
 
+var exampleModel = {
+	"title": "Galaxy Ring: INNER",
+	"sections": [
+		{"header":"Summary","rows":[
+			{"type":"kv","k":"Systems","v":"12"},
+		]},
+		{"header":"Star Systems","rows":[
+			{"type":"button","text":"Sol","action":"open_system","id":"sol"}
+		]}
+	]
+}
 
+func openInfoPanel(layer) -> void:
+	print_debug("open info panel called")
+	infoPanel.openPanelWithData(exampleModel)
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
