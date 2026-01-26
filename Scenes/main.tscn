@@ -150,20 +150,7 @@ starSystemInfo = ExtResource("6_hibaj")
 
 [node name="PanelLayer" type="CanvasLayer" parent="ViewManager"]
 
-[node name="OverlayRoot" type="Control" parent="ViewManager/PanelLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="InfoPanel" parent="ViewManager/PanelLayer/OverlayRoot" instance=ExtResource("12_ee4r6")]
-clip_contents = true
-layout_mode = 1
-offset_left = 1410.0
-offset_right = 1417.0
+[node name="InfoPanel" parent="ViewManager/PanelLayer" instance=ExtResource("12_ee4r6")]
 
 [node name="Distance Labelled" type="Node" parent="."]
 

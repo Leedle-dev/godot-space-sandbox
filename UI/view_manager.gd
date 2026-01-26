@@ -3,8 +3,9 @@ class_name ViewManager
 
 enum MODE {GAMEPLAY, TACTICAL, STAR, GALAXY}
 
-const TWEEN_DURATION : float = 0.6
-
+const TWEEN_DURATION : float = 0.45
+const BASEGALAXYZOOM : float = 0.5
+const LIMITGALAXYZOOM : float = 0.0667
 
 var camera : PCam2DController
 
@@ -18,7 +19,7 @@ var default_clear_color
 @onready var starMap : StarSystemUI = $StarMapLayer/StarSystemUI
 @onready var galaxyMap : GalaxyMapUI = $StarMapLayer/GalaxyMapUI
 @onready var panelLayer : CanvasLayer = $PanelLayer
-@onready var infoPanel : InfoPanel = $PanelLayer/OverlayRoot/InfoPanel
+@onready var infoPanel : InfoPanel = $PanelLayer/InfoPanel
 #var colorRect : ColorRect
 
 var switchingLayers : bool = false
@@ -47,6 +48,9 @@ func doneTween():
 	if currentMode == MODE.GAMEPLAY:
 		currentSectorIndex = starMap.getNextValidIndex(currentSectorIndex)
 
+func hideGalaxyUI():
+	galaxyMap.setVisible(false)
+
 func switchMode(mode : MODE, isZoomIn : bool):
 	if isTweening:
 		return
@@ -65,65 +69,104 @@ func switchMode(mode : MODE, isZoomIn : bool):
 			fade(starMap, 1.0, TWEEN_DURATION, true)
 			fade(starMap.sectors[currentSectorIndex].sectorRing.nameLabel, 1.0, TWEEN_DURATION, true)
 			fade(starMap.sectors[currentSectorIndex].sectorRing.nameLabelStar, 0.0, TWEEN_DURATION, true)
+			setupStarZoom()
 			if not isZoomIn:
 				starMap.sectors[currentSectorIndex].sectorRing.nameLabelStar.modulate.a = 0.0
 				fadeArray(starMap.sectors, 0.0, TWEEN_DURATION/2, true, currentSectorIndex)
 				fade(starMap.sectors[currentSectorIndex], 1.0, TWEEN_DURATION, true)
-				setupStarZoom()
 				tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  8.0, 4.0, TWEEN_DURATION)
-				tween.finished.connect(doneTween)
 			else:
 				fadeArray(starMap.sectors, 0.0, TWEEN_DURATION, true, currentSectorIndex)
-				setupStarZoom()
 				tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  1.0, 4.0, TWEEN_DURATION)
-				tween.finished.connect(doneTween)
+			tween.finished.connect(doneTween)
 		MODE.STAR:
 			resetTween()
+			galaxyMap.setInput(false)
 			starMapOriginalPosition = starMap.position
 			fade(starMap.sectors[currentSectorIndex].sectorRing.nameLabel, 0.0, TWEEN_DURATION, true)
 			fade(starMap.sectors[currentSectorIndex].sectorRing.nameLabelStar, 1.0, TWEEN_DURATION, true)
-			fade(sectorRing, 0.0, TWEEN_DURATION, true)
-			scale(sectorRing, 1.0, 0.25, TWEEN_DURATION, true)
 			fadeArray(starMap.sectors, 1.0, TWEEN_DURATION, true)
 			fade(starMap, 1.0, TWEEN_DURATION, true)
 			setupStarZoom()
-			tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  4.0, 1.0, TWEEN_DURATION)
-			tween.finished.connect(doneTween)	
+			if not isZoomIn:
+				fade(sectorRing, 0.0, TWEEN_DURATION, true)
+				scale(sectorRing, 1.0, 0.25, TWEEN_DURATION, true)
+				tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  4.0, 1.0, TWEEN_DURATION)
+			else:
+				fade(galaxyMap, 0.0, TWEEN_DURATION, true)
+				tween.parallel().tween_method(Callable(self, "setZoomScaleGalaxy"), galaxyMap.mapContainer.scale.x, 4.0, TWEEN_DURATION)
+				tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  0.5, 1.0, TWEEN_DURATION)
+			tween.finished.connect(doneTween)
+			tween.finished.connect(hideGalaxyUI)
+			#galaxyMap.setVisible(false)	
 		MODE.GALAXY:
 			resetTween()
+			galaxyMap.setVisible(true)
 			fade(starMap, 0.0, TWEEN_DURATION) # Fade Out StarMap
 			setupStarZoom() # Set zoomtarget to 
 			tween.parallel().tween_method(Callable(self, "setZoomScaleStar"),  1.0, 0.5, TWEEN_DURATION)
 
 			fade(galaxyMap, 1.0, TWEEN_DURATION, true)
 			setupGalaxyZoom()
-			tween.parallel().tween_method(Callable(self, "setZoomScaleGalaxy"), 4.0, 1.0, TWEEN_DURATION)
+			tween.parallel().tween_method(Callable(self, "setZoomScaleGalaxy"), 4.0, BASEGALAXYZOOM, TWEEN_DURATION)
 			tween.finished.connect(doneTween)
+			galaxyMap.setInput(true)
 			#pass
 
 ## Zooming logic, called by the playerController on mousewheel input.
 ## mousePosition is a system call the gets the mouseposition
 ## direction is an int to indicate mouse scroll up (1) or down (-1)
 var galaxyZoomScale : Vector2
+"""
 func galaxyZoom(mousePosition: Vector2, direction: int):
 	galaxyZoomScale = galaxyMap.mapContainer.scale
 	# Mouse wheel up, zoom in
 	if direction > 0:
-		# If we are not as zoomed in as possible, zoom in
-		#if galaxyMap.mapContainer.scale.x < 1.0:
+		# If we are as zoomed in as possible, shift back to star map
+		if galaxyMap.mapContainer.scale.x * 1.1 > BASEGALAXYZOOM:
+			
+		else:
 			setZoomScaleGalaxy(galaxyZoomScale.x * 1.1)
 	elif direction < 0:
 		#if galaxyMap.mapContainer.scale.x > 0.25:
 			setZoomScaleGalaxy(galaxyZoomScale.x * 0.9)
 			#scale(galaxyMap.mapContainer, galaxyMap.mapContainer.scale.x, galaxyMap.mapContainer.scale.x*0.9, 0.05, false)
 			#tween.finished.connect(doneTween)
-
+"""
 func panGalaxy(delta: Vector2):
 	galaxyMapFocus -= delta / galaxyMap.mapContainer.scale.x
 	applyGalaxyTransform()
 
 func applyGalaxyTransform():
 	galaxyMap.mapContainer.position = galaxyMapCenter - galaxyMapFocus * galaxyMap.mapContainer.scale.x
+
+func zoomIn() -> void:
+	match currentMode:
+		MODE.GAMEPLAY:
+			return
+		MODE.TACTICAL:
+			switchMode(MODE.GAMEPLAY, true)
+		MODE.STAR:
+			switchMode(MODE.TACTICAL, true)
+		MODE.GALAXY:
+			if galaxyMap.mapContainer.scale.x * 1.1 > BASEGALAXYZOOM:
+				switchMode(MODE.STAR, true)
+			else:
+				setZoomScaleGalaxy(galaxyMap.mapContainer.scale.x * 1.1)
+
+func zoomOut() -> void:
+	match currentMode:
+		MODE.GAMEPLAY:
+			switchMode(MODE.TACTICAL, false)
+		MODE.TACTICAL:
+			switchMode(MODE.STAR, false)
+		MODE.STAR:
+			switchMode(MODE.GALAXY, false)
+		MODE.GALAXY:
+			if galaxyMap.mapContainer.scale.x * 0.9 < LIMITGALAXYZOOM:
+				return
+			else:
+				setZoomScaleGalaxy(galaxyMap.mapContainer.scale.x * 0.9)
 
 var starMapFocus : Vector2
 var starMapBasePosition : Vector2
@@ -248,7 +291,10 @@ var exampleModel = {
 			{"type":"kv","k":"Systems","v":"12"},
 		]},
 		{"header":"Star Systems","rows":[
-			{"type":"button","text":"Sol","action":"open_system","id":"sol"}
+			{"type":"button","text":"Sol","action":"open_system","id":"sol"},
+			{"type":"button","text":"Tau Ceti","action":"open_system","id":"sol"},
+			{"type":"button","text":"Volton","action":"open_system","id":"sol"},
+			{"type":"button","text":"Scarabis","action":"open_system","id":"sol"}
 		]}
 	]
 }

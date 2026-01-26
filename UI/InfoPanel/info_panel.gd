@@ -20,26 +20,33 @@ var exampleModel = {
 		},
 		{"header":"Star Systems",
 		"rows":[
-			{"type":"button","text":"Sol","action":"open_system","id":"sol"}
+			{"type":"button","text":"Sol","action":"open_system","id":"sol"},
+			{"type":"button","text":"Tau Ceti","action":"open_system","id":"sol"},
+			{"type":"button","text":"Volton","action":"open_system","id":"sol"},
+			{"type":"button","text":"Scarabis","action":"open_system","id":"sol"}
 		]
 		}
 	]
 }
 """
 
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	visible = false
+	closeButton.text = "✕"
+	closeButton.custom_minimum_size = Vector2(30,30)
+	closeButton.pressed.connect(closePanel)
+	pass # Replace with function body.
+
+"""
+Was used to attempt to tween the panel
+
 var baseLeft := 0.0
 var baseRight := 0.0
 var slide := 0.0
 var cached := false
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	visible = true
-	closeButton.text = "✕"
-	closeButton.custom_minimum_size = Vector2(30,30)
-	closeButton.pressed.connect(closePanel)
-	call_deferred("cacheLayout")
-	pass # Replace with function body.
 
 func cacheLayout() -> void:
 	await get_tree().process_frame
@@ -53,20 +60,6 @@ func cacheLayout() -> void:
 	offset_right = baseRight + slide
 	visible = false
 	isOpen = false
-
-func openPanelWithData(data: Dictionary) -> void:
-	panelTitle.text = str(data.get("title"))
-
-	# Clear out old data
-	for child in infoVBox.get_children():
-		child.queue_free()
-
-	# Create updated data
-	var sections : Array = data.get("sections")
-	for section in sections:
-		addSection(section)
-
-	openPanel()
 
 func tweenPanel(isOpening : bool) -> void:
 	await get_tree().process_frame
@@ -88,6 +81,26 @@ func tweenPanel(isOpening : bool) -> void:
 		tween.finished.connect(func():
 			visible = false
 		)
+"""
+func openPanelWithData(data: Dictionary) -> void:
+	panelTitle.text = str(data.get("title"))
+
+	# Clear out old data
+	for child in infoVBox.get_children():
+		child.queue_free()
+
+	# Create updated data
+	var sections : Array = data.get("sections")
+	for section in sections:
+		addSection(section)
+
+	openPanel()
+
+	print("Panel size:", size)
+	print("Body scroll size:", $MarginContainer/VBoxContainer/ScrollContainer.size)
+	print("BodyVBox size:", infoVBox.size)
+
+
 
 ## Open and close just hold simple tween and position state logic for open/closing the panel
 func openPanel() -> void:
@@ -97,7 +110,7 @@ func openPanel() -> void:
 	
 	visible = true
 
-	tweenPanel(true)
+	#tweenPanel(true)
 	"""
 	await get_tree().process_frame
 	killTween()
@@ -118,7 +131,7 @@ func closePanel() -> void:
 		return
 	isOpen = false
 
-	tweenPanel(false)
+	#tweenPanel(false)
 	"""
 	await get_tree().process_frame
 	killTween()
@@ -184,12 +197,15 @@ func rowLabel(text : String) -> void:
 func rowKV(k : String, v : String) -> void:
 	var header = HBoxContainer.new()
 	header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.size_flags_horizontal = Control.SIZE_SHRINK_END
 
 	var keyLabel = makeNewLabel(k)
 	keyLabel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	keyLabel.size_flags_horizontal = Control.SIZE_SHRINK_END
 
 	var valueLabel = makeNewLabel(v)
 	valueLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	valueLabel.size_flags_horizontal = Control.SIZE_SHRINK_END
 
 	header.add_child(keyLabel)
 	header.add_child(valueLabel)

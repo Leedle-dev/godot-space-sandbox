@@ -58,7 +58,17 @@ func _ready() -> void:
 		ringClicked.emit(layer)
 	)
 
+	setActive(false)
 
+func setActive(active : bool) -> void:
+	setVisible(active)
+	setInput(active)
+
+func setVisible(active : bool) -> void:
+	visible = active
+
+func setInput(active : bool) -> void:
+	mouse_filter = Control.MOUSE_FILTER_STOP if active else Control.MOUSE_FILTER_IGNORE
 
 func pickRandomPosition(layer : Galaxy.GalaxyLayer) -> Vector2:
 	var minLayer: Vector2
