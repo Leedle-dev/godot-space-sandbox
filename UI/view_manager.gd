@@ -26,19 +26,13 @@ var switchingLayers : bool = false
 #var sectorRing : SectorRingUI
 
 
-
-
 var starMapOriginalPosition
 
 var currentMode : MODE
 var targetMode : MODE
 var tween : Tween
 var isTweening : bool = false
-#
-#var zoomFocus: Vector2
-#var zoomCenter: Vector2
-#var zoomBasePosition: Vector2
-#var zoomTarget: Control
+
 
 var currentSectorIndex : int = 0
 
@@ -206,32 +200,13 @@ func setZoomScaleGalaxy(value : float):
 	galaxyMap.mapContainer.position = galaxyMapCenter - galaxyMapFocus * value
 
 
-
-func changeView(mode : MODE):
-	pass
-
-#var tween := create_tween()
-"""	
-var tweens := {}
-
-func killTween(node : Control):
-	if tweens.has(node):
-		if tweens[node].is_valid():
-			tweens[node].kill()
-	tweens[node] = null
-"""
 func resetTween() -> void:
 	if tween != null:
 		tween.kill()
 	tween = create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
 	isTweening = true
-	#var returnee
-	#if parallel:
-	#	returnee = create_tween().set_parallel(parallel)
-	#else:
-	#	returnee = create_tween()
-	#return returnee
+
 
 func fadeArray(variant : Array[SectorRingUI], alpha := 0.0, duration:= 0.4, parallel := false, exclude := -1):
 	for i in range(variant.size()):
@@ -240,16 +215,10 @@ func fadeArray(variant : Array[SectorRingUI], alpha := 0.0, duration:= 0.4, para
 	pass
 
 func fade(variant : Control, alpha := 0.0, duration := 0.4, parallel := false):
-	#killTween(variant)
-	#var tween = resetTween(true)
-	#tweens[variant] = tween
-	#variant.scale = Vector2(startScale, startScale)
-	#tween.set_ease(Tween.EASE_OUT)
 	if parallel:
 		tween.parallel().tween_property(variant, "modulate:a", alpha, duration)
 	else:
 		tween.tween_property(variant, "modulate:a", alpha, duration)
-	#tweenVar.tween_property(variant, "scale", Vector2(endScale, endScale), duration)
 
 func fadeColor(variant : Control, alpha := 0.0, duration := TWEEN_DURATION, parallel := true):
 	if parallel:
@@ -263,17 +232,14 @@ func scale(variant : Control,  startScale := 0.25, endScale : = 1.0, duration :=
 		tween.parallel().tween_property(variant, "scale", Vector2(endScale, endScale), duration)
 	else:
 		tween.tween_property(variant, "scale", Vector2(endScale, endScale), duration)
-	#return tween_property(variant, "scale", Vector2(endScale, endScale), duration)
 
 func shift(variant : Control, pixelShift := Vector2(0,0), duration := 0.3, parallel := false):
-	#killTween(variant)
-	#var tween = resetTween()
-	#tweens[variant] = tween
 	if parallel:
 		tween.parallel().tween_property(variant, "position", pixelShift, duration)
 	else:
 		tween.tween_property(variant, "position", pixelShift, duration)
 	variant.position = pixelShift
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	currentMode = MODE.GAMEPLAY
